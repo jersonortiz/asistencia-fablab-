@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  springboot-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mariadb
+    environment:
+      - MYSQL_URL=jdbc:mariadb://mariadb:3306/fablab_asistencia
+      - MYSQL_USERNAME=user
+      - MYSQL_PASSWORD=password
+  mariadb:
+    image: mariadb:10.5
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: fablab_asistencia
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./fablab_asistencia.sql:/docker-entrypoint-initdb.d/fablab_asistencia.sql
