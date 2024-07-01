@@ -25,5 +25,5 @@ public class ReporteSocializacionColegioJson {
 
     private ColegioDTO idColegio;
 
-    private PersonaDTO idPersona;
+    private PersonaReporteJson idPersona;
 }

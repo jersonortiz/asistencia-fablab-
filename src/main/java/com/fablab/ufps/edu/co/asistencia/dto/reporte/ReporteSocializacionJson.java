@@ -19,14 +19,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ReporteSocializacionJson {
-            private Integer id;
+
+    private Integer id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyy-MM-dd", timezone = "UTC")
     private Date fecha;
 
     private String otroPrograma;
 
-    private PersonaDTO idPersona;
+    private PersonaReporteJson idPersona;
 
     private ProgramaAcademicoDTO idProgramaAcademico;
 

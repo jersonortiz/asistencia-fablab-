@@ -4,13 +4,14 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.crud;
 
-
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.TipoUsuarioDTO;
 import com.fablab.ufps.edu.co.asistencia.entity.TipoUsuario;
 import com.fablab.ufps.edu.co.asistencia.repository.TipoUsuarioRepository;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,18 +38,13 @@ public class TipoUsuarioController {
     private TipoUsuarioRepository tipoUsuarioRepository;
 
     @GetMapping()
-    public ArrayList<TipoUsuarioDTO> list() {
-        ArrayList<TipoUsuario> aulas = (ArrayList<TipoUsuario>) tipoUsuarioRepository.findAll();
-        ArrayList<TipoUsuarioDTO> lista = new ArrayList<>();
-        for (TipoUsuario x : aulas) {
+    public List<Object> list() {
+        return tipoUsuarioRepository
+                .findAll()
+                .stream()
+                .map(CommonDTO::tipoUsuarioToDTO)
+                .collect(Collectors.toList());
 
-            TipoUsuarioDTO a = new TipoUsuarioDTO();
-            a.setId(x.getId());
-            a.setTipo(x.getTipo());
-
-            lista.add(a);
-        }
-        return lista;
     }
 
     @GetMapping("/{id}")
@@ -62,12 +58,7 @@ public class TipoUsuarioController {
             return ResponseEntity.ok(msg);
         }
 
-        TipoUsuario a = ou.get();
-
-        TipoUsuarioDTO u = new TipoUsuarioDTO();
-
-        u.setId(a.getId());
-        u.setTipo(a.getTipo());
+        TipoUsuarioDTO u = CommonDTO.tipoUsuarioToDTO(ou.get());
 
         return ResponseEntity.ok(u);
     }

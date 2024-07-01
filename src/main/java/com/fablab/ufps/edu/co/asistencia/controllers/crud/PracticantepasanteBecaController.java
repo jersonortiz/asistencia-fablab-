@@ -4,20 +4,18 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.crud;
 
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.PoblacionEspecialDTO;
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
+import com.fablab.ufps.edu.co.asistencia.common.CommonEntity;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.PracticantepasanteBecaDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.TipoUsuarioDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.reporte.PersonaReporteJson;
 import com.fablab.ufps.edu.co.asistencia.entity.Persona;
-import com.fablab.ufps.edu.co.asistencia.entity.PoblacionEspecial;
 import com.fablab.ufps.edu.co.asistencia.entity.PracticantepasanteBeca;
-import com.fablab.ufps.edu.co.asistencia.entity.TipoUsuario;
 import com.fablab.ufps.edu.co.asistencia.repository.PracticantepasanteBecaRepository;
-import java.util.ArrayList;
+import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,16 +38,13 @@ public class PracticantepasanteBecaController {
     private PracticantepasanteBecaRepository practicantepasanteBecaRepository;
 
     @GetMapping()
-    public ResponseEntity list() {
-        ArrayList<PracticantepasanteBeca> universidades = (ArrayList<PracticantepasanteBeca>) practicantepasanteBecaRepository.findAll();
-        ArrayList<PracticantepasanteBecaDTO> lista = new ArrayList<>();
-        for (PracticantepasanteBeca x : universidades) {
+    public List<Object> list() {
 
-            PracticantepasanteBecaDTO u = toDTO(x);
-
-            lista.add(u);
-        }
-        return ResponseEntity.ok(lista);
+        return practicantepasanteBecaRepository
+                .findAll()
+                .stream()
+                .map(CommonDTO::practicantepasanteBecaToDTO)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
@@ -63,7 +58,7 @@ public class PracticantepasanteBecaController {
             return ResponseEntity.ok(msg);
         }
 
-        PracticantepasanteBecaDTO u = toDTO(ou.get());
+        PracticantepasanteBecaDTO u = CommonDTO.practicantepasanteBecaToDTO(ou.get());
 
         return ResponseEntity.ok(u);
     }
@@ -100,7 +95,7 @@ public class PracticantepasanteBecaController {
     @PostMapping
     public ResponseEntity post(@RequestBody PracticantepasanteBecaDTO input) {
 
-        PracticantepasanteBeca u = toEntity(input);
+        PracticantepasanteBeca u = CommonEntity.practicantepasanteBecaDTOToEntity(input);
 
         System.out.println(input);
         System.out.println(u);
@@ -138,68 +133,5 @@ public class PracticantepasanteBecaController {
 
     }
 
-    private PracticantepasanteBecaDTO toDTO(PracticantepasanteBeca u) {
-        PracticantepasanteBecaDTO ud = new PracticantepasanteBecaDTO();
-
-        ud.setId(u.getId());
-        ud.setIdCarnet(u.getIdCarnet());
-        ud.setEstado(u.getEstado());
-        ud.setIdPersona(personaToPersonaReporteDTO(u.getIdPersona()));
-        ud.setSemestre(u.getSemestre());
-
-        return ud;
-
-    }
-
-    private PracticantepasanteBeca toEntity(PracticantepasanteBecaDTO u) {
-        PracticantepasanteBeca ud = new PracticantepasanteBeca();
-
-        ud.setId(u.getId());
-        ud.setIdCarnet(u.getIdCarnet());
-        ud.setEstado(u.isEstado());
-        ud.setSemestre(u.getSemestre());
-
-        Persona p = new Persona();
-        p.setId(u.getIdPersona().getId());
-        ud.setIdPersona(p);
-
-        return ud;
-
-    }
-
-    private PersonaReporteJson personaToPersonaReporteDTO(Persona u) {
-        PersonaReporteJson ud = new PersonaReporteJson();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre() + ' ' + u.getApellido());
-        ud.setDocumento(u.getDocumento());
-        ud.setTelefono(u.getTelefono());
-        ud.setFechaNacimiento(u.getFechaNacimiento());
-        ud.setSexo(u.getSexo());
-        ud.setCodigo(u.getCodigo());
-        ud.setIdPoblacionEspecial(poblacionEspecialToDTO(u.getIdPoblacionEspecial()));
-        ud.setIdTipoUsuario(tipoUsuarioToDTO(u.getIdTipoUsuario()));
-
-        return ud;
-
-    }
-
-    private PoblacionEspecialDTO poblacionEspecialToDTO(PoblacionEspecial u) {
-        PoblacionEspecialDTO ud = new PoblacionEspecialDTO();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        return ud;
-
-    }
-
-    private TipoUsuarioDTO tipoUsuarioToDTO(TipoUsuario u) {
-        TipoUsuarioDTO ud = new TipoUsuarioDTO();
-
-        ud.setId(u.getId());
-        ud.setTipo(u.getTipo());
-        return ud;
-
-    }
 
 }

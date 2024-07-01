@@ -4,29 +4,18 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.asistencia;
 
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.PoblacionEspecialDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.ProgramaAcademicoDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.SemilleroDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.TipoUsuarioDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.UniversidadDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.json.AsistenciaCursoJson;
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
+import com.fablab.ufps.edu.co.asistencia.common.CommonReporte;
 import com.fablab.ufps.edu.co.asistencia.dto.json.AsistenciaSemilleroJson;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
-import com.fablab.ufps.edu.co.asistencia.dto.reporte.PersonaReporteJson;
-import com.fablab.ufps.edu.co.asistencia.dto.reporte.ReporteSemilleroJson;
-import com.fablab.ufps.edu.co.asistencia.dto.visita.VisitaCursoDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.visita.VisitaSemilleroDTO;
-import com.fablab.ufps.edu.co.asistencia.entity.Cursos;
 import com.fablab.ufps.edu.co.asistencia.entity.Persona;
 import com.fablab.ufps.edu.co.asistencia.entity.PoblacionEspecial;
 import com.fablab.ufps.edu.co.asistencia.entity.ProgramaAcademico;
 import com.fablab.ufps.edu.co.asistencia.entity.Semillero;
 import com.fablab.ufps.edu.co.asistencia.entity.TipoUsuario;
 import com.fablab.ufps.edu.co.asistencia.entity.Universidad;
-import com.fablab.ufps.edu.co.asistencia.entity.VisitaCurso;
 import com.fablab.ufps.edu.co.asistencia.entity.VisitaSemillero;
 import com.fablab.ufps.edu.co.asistencia.repository.PersonaRepository;
-import com.fablab.ufps.edu.co.asistencia.repository.VisitaCursoRepository;
 import com.fablab.ufps.edu.co.asistencia.repository.VisitaSemilleroRepository;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,7 +51,7 @@ public class AsistenciaSemilleroController {
         return visitaSemilleroRepository
                 .findAll()
                 .stream()
-                .map(this::toDTO)
+                .map(CommonDTO::visitaSemilleroToDTO)
                 .collect(Collectors.toList());
     }
 
@@ -70,7 +59,7 @@ public class AsistenciaSemilleroController {
     public List<Object> Reporte() {
         return visitaSemilleroRepository.findAll()
                 .stream()
-                .map(this::toJson)
+                .map(CommonReporte::visitaSemilleroToJson)
                 .collect(Collectors.toList());
     }
 
@@ -149,116 +138,6 @@ public class AsistenciaSemilleroController {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al crear el estudiante", e);
         }
-    }
-
-    private ReporteSemilleroJson toJson(VisitaSemillero v) {
-        ReporteSemilleroJson s = new ReporteSemilleroJson();
-
-        s.setId(v.getId());
-        s.setFecha(v.getFecha());
-        s.setOtroPrograma(v.getOtroPrograma());
-
-        s.setIdPersona(personaToPersonaReporteDTO(v.getIdPersona()));
-        s.setIdSemillero(semilleroToDTO(v.getIdSemillero()));
-        s.setIdUniversidad(universidadToDTO(v.getIdUniversidad()));
-        s.setIdProgramaAcademico(programaToDTO(v.getIdProgramaAcademico()));
-
-        return s;
-
-    }
-
-    private VisitaSemilleroDTO toDTO(VisitaSemillero x) {
-        VisitaSemilleroDTO a = new VisitaSemilleroDTO();
-
-        a.setId(x.getId());
-        a.setFecha(x.getFecha());
-
-        if (x.getIdProgramaAcademico() != null) {
-            a.setIdProgramaAcademico(x.getIdProgramaAcademico().getId());
-
-        }
-
-        a.setOtroPrograma(x.getOtroPrograma());
-
-        a.setIdSemillero(x.getIdSemillero().getId());
-        a.setIdPersona(x.getIdPersona().getId());
-        a.setIdUniversidad(x.getIdUniversidad().getId());
-
-        return a;
-
-    }
-
-    private PersonaReporteJson personaToPersonaReporteDTO(Persona u) {
-        PersonaReporteJson ud = new PersonaReporteJson();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre() + ' ' + u.getApellido());
-        ud.setDocumento(u.getDocumento());
-        ud.setTelefono(u.getTelefono());
-        ud.setFechaNacimiento(u.getFechaNacimiento());
-        ud.setSexo(u.getSexo());
-        ud.setCodigo(u.getCodigo());
-        ud.setIdPoblacionEspecial(poblacionEspecialToDTO(u.getIdPoblacionEspecial()));
-        ud.setIdTipoUsuario(tipoUsuarioToDTO(u.getIdTipoUsuario()));
-
-        return ud;
-
-    }
-
-    private SemilleroDTO semilleroToDTO(Semillero u) {
-        SemilleroDTO ud = new SemilleroDTO();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        ud.setSigla(u.getSigla());
-
-        return ud;
-
-    }
-
-    private ProgramaAcademicoDTO programaToDTO(ProgramaAcademico u) {
-        ProgramaAcademicoDTO ud = new ProgramaAcademicoDTO();
-
-        if (u == null) {
-            return null;
-        }
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        ud.setDescripcion(u.getDescripcion());
-
-        return ud;
-
-    }
-
-    private UniversidadDTO universidadToDTO(Universidad u) {
-        UniversidadDTO ud = new UniversidadDTO();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        ud.setDireccion(u.getDireccion());
-        ud.setTelContacto(u.getTelContacto());
-
-        return ud;
-
-    }
-
-    private PoblacionEspecialDTO poblacionEspecialToDTO(PoblacionEspecial u) {
-        PoblacionEspecialDTO ud = new PoblacionEspecialDTO();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        return ud;
-
-    }
-
-    private TipoUsuarioDTO tipoUsuarioToDTO(TipoUsuario u) {
-        TipoUsuarioDTO ud = new TipoUsuarioDTO();
-
-        ud.setId(u.getId());
-        ud.setTipo(u.getTipo());
-        return ud;
-
     }
 
 }

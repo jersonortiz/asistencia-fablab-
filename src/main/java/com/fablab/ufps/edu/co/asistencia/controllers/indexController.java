@@ -8,20 +8,29 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
+ * Controller for handling the index page.
  *
- * @author jerson
+ * <p>
+ * This controller provides a single endpoint for serving the index page.</p>
+ *
+ * @author authorjerson
  */
 @Controller
 public class indexController {
-    
-    
-    
-    
-     @GetMapping("/")
+
+    /**
+     * Handles requests to the root URL ("/").
+     *
+     * <p>
+     * Returns the name of the view to be rendered, which corresponds to
+     * "index".</p>
+     *
+     * @return the name of the index view
+     */
+    @GetMapping("/")
     public String index() {
         //has to be without blank spaces
         return "index";
-    }   
+    }
 
-    
 }

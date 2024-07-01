@@ -4,16 +4,18 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.crud;
 
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.PersonaDTO;
 import com.fablab.ufps.edu.co.asistencia.entity.Persona;
 import com.fablab.ufps.edu.co.asistencia.entity.PoblacionEspecial;
 import com.fablab.ufps.edu.co.asistencia.entity.TipoUsuario;
 import com.fablab.ufps.edu.co.asistencia.repository.PersonaRepository;
-import java.util.ArrayList;
+import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,16 +38,13 @@ public class PersonaController {
     private PersonaRepository personaRepository;
 
     @GetMapping()
-    public ResponseEntity list() {
-        ArrayList<Persona> universidades = (ArrayList<Persona>) personaRepository.findAll();
-        ArrayList<PersonaDTO> lista = new ArrayList<>();
-        for (Persona x : universidades) {
+    public List<Object> list() {
+        return personaRepository
+                .findAll()
+                .stream()
+                .map(CommonDTO::personaToDTO)
+                .collect(Collectors.toList());
 
-            PersonaDTO u = personaToDTO(x);
-
-            lista.add(u);
-        }
-        return ResponseEntity.ok(lista);
     }
 
     @GetMapping("/{id}")
@@ -59,7 +58,7 @@ public class PersonaController {
             return ResponseEntity.ok(msg);
         }
 
-        PersonaDTO u = personaToDTO(ou.get());
+        PersonaDTO u = CommonDTO.personaToDTO(ou.get());
 
         return ResponseEntity.ok(u);
     }
@@ -75,7 +74,7 @@ public class PersonaController {
             return new ResponseEntity(msg, HttpStatus.NOT_FOUND);
         }
 
-        PersonaDTO u = personaToDTO(ou.get());
+        PersonaDTO u = CommonDTO.personaToDTO(ou.get());
 
         return ResponseEntity.ok(u);
     }
@@ -139,10 +138,9 @@ public class PersonaController {
         tu.setId(input.getIdTipoUsuario());
         ud.setIdTipoUsuario(tu);
 
-        System.out.println(input);
-        System.out.println(ud);
+     
         ud = personaRepository.save(ud);
-        System.out.println(ud);
+    
         input.setId(ud.getId());
 
         return new ResponseEntity(input, HttpStatus.ACCEPTED);
@@ -170,24 +168,6 @@ public class PersonaController {
             msg.setMsg("no");
             return new ResponseEntity(msg, HttpStatus.BAD_REQUEST);
         }
-    }
-
-    private PersonaDTO personaToDTO(Persona u) {
-        PersonaDTO ud = new PersonaDTO();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        ud.setApellido(u.getApellido());
-        ud.setDocumento(u.getDocumento());
-        ud.setTelefono(u.getTelefono());
-        ud.setFechaNacimiento(u.getFechaNacimiento());
-        ud.setSexo(u.getSexo());
-        ud.setCodigo(u.getCodigo());
-        ud.setIdPoblacionEspecial(u.getIdPoblacionEspecial().getId());
-        ud.setIdTipoUsuario(u.getIdTipoUsuario().getId());
-
-        return ud;
-
     }
 
 }

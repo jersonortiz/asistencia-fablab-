@@ -4,20 +4,16 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.asistencia;
 
-import com.fablab.ufps.edu.co.asistencia.dto.json.AsistenciaCursoColegioJson;
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
+import com.fablab.ufps.edu.co.asistencia.common.CommonReporte;
 import com.fablab.ufps.edu.co.asistencia.dto.json.AsistenciaSocializacionColegioJson;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
-import com.fablab.ufps.edu.co.asistencia.dto.visita.VisitaCursoColegioDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.visita.VisitaSocializacionColegioDTO;
 import com.fablab.ufps.edu.co.asistencia.entity.Colegio;
-import com.fablab.ufps.edu.co.asistencia.entity.Cursos;
 import com.fablab.ufps.edu.co.asistencia.entity.Persona;
 import com.fablab.ufps.edu.co.asistencia.entity.PoblacionEspecial;
 import com.fablab.ufps.edu.co.asistencia.entity.TipoUsuario;
-import com.fablab.ufps.edu.co.asistencia.entity.VisitaCursoColegio;
 import com.fablab.ufps.edu.co.asistencia.entity.VisitaSocializacionColegio;
 import com.fablab.ufps.edu.co.asistencia.repository.PersonaRepository;
-import com.fablab.ufps.edu.co.asistencia.repository.VisitaCursoColegioRepository;
 import com.fablab.ufps.edu.co.asistencia.repository.VisitaSocializacionColegioRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,7 +49,16 @@ public class AsistenciaSocializacionColegio {
         return visitaSocializacionColegioRepository
                 .findAll()
                 .stream()
-                .map(this::toDTO)
+                .map(CommonDTO::visitaSocializacionColegioToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/reporte")
+    public List<Object> Reporte() {
+        return visitaSocializacionColegioRepository
+                .findAll()
+                .stream()
+                .map(CommonReporte::visitaSocializacionColegioToJson)
                 .collect(Collectors.toList());
     }
 
@@ -120,20 +125,6 @@ public class AsistenciaSocializacionColegio {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al crear el estudiante", e);
         }
-    }
-
-    private VisitaSocializacionColegioDTO toDTO(VisitaSocializacionColegio x) {
-        VisitaSocializacionColegioDTO a = new VisitaSocializacionColegioDTO();
-
-        a.setId(x.getId());
-        a.setFecha(x.getFecha());
-
-        a.setIdColegio(x.getIdColegio().getId());
-
-        a.setIdPersona(x.getIdPersona().getId());
-
-        return a;
-
     }
 
 }

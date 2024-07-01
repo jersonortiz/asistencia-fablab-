@@ -4,6 +4,7 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.asistencia;
 
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.json.AsistenciaSteamJson;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
 import com.fablab.ufps.edu.co.asistencia.dto.visita.VisitaSteamSchoolDTO;
@@ -13,7 +14,6 @@ import com.fablab.ufps.edu.co.asistencia.entity.PoblacionEspecial;
 import com.fablab.ufps.edu.co.asistencia.entity.SteamStudent;
 import com.fablab.ufps.edu.co.asistencia.entity.VisitaSteamSchool;
 import com.fablab.ufps.edu.co.asistencia.repository.ColegioRepository;
-import com.fablab.ufps.edu.co.asistencia.repository.CursosRepository;
 import com.fablab.ufps.edu.co.asistencia.repository.PoblacionEspecialRepository;
 import com.fablab.ufps.edu.co.asistencia.repository.SteamStudentRepository;
 import com.fablab.ufps.edu.co.asistencia.repository.VisitaSteamSchoolRepository;
@@ -44,7 +44,6 @@ public class AsistenciaSteamSchoolController {
     @Autowired
     private SteamStudentRepository steamStudentRepository;
 
-
     @Autowired
     private ColegioRepository colegioRepository;
 
@@ -59,7 +58,7 @@ public class AsistenciaSteamSchoolController {
 
         return visitaSteamSchoolRepository.findAll()
                 .stream()
-                .map(this::toDTO)
+                .map(CommonDTO::visitaSteamSchoolToDTO)
                 .collect(Collectors.toList());
 
     }
@@ -127,18 +126,6 @@ public class AsistenciaSteamSchoolController {
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al crear el estudiante", e);
         }
-    }
-
-    private VisitaSteamSchoolDTO toDTO(VisitaSteamSchool x) {
-        VisitaSteamSchoolDTO a = new VisitaSteamSchoolDTO();
-
-        a.setIdColegio(x.getIdColegio().getId());
-        a.setIdCurso(x.getIdCurso().getId());
-        a.setIdSteamStudent(x.getIdSteamStudent().getId());
-        a.setFecha(x.getFecha());
-        a.setId(x.getId());
-        return a;
-
     }
 
 }

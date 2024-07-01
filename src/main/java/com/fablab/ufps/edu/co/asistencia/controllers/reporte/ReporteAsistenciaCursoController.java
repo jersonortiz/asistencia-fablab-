@@ -4,30 +4,12 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.reporte;
 
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.ColegioDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.CursoDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.PoblacionEspecialDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.ProgramaAcademicoDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.TipoUsuarioDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.UniversidadDTO;
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
+import com.fablab.ufps.edu.co.asistencia.common.CommonReporte;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
-import com.fablab.ufps.edu.co.asistencia.dto.reporte.PersonaReporteJson;
-import com.fablab.ufps.edu.co.asistencia.dto.reporte.ReporteCursoJson;
 import com.fablab.ufps.edu.co.asistencia.dto.reporte.ReporteGeneralCurso;
-import com.fablab.ufps.edu.co.asistencia.entity.Colegio;
-import com.fablab.ufps.edu.co.asistencia.entity.Cursos;
-import com.fablab.ufps.edu.co.asistencia.entity.Persona;
-import com.fablab.ufps.edu.co.asistencia.entity.PoblacionEspecial;
-import com.fablab.ufps.edu.co.asistencia.entity.ProgramaAcademico;
-import com.fablab.ufps.edu.co.asistencia.entity.SteamStudent;
-import com.fablab.ufps.edu.co.asistencia.entity.TipoUsuario;
-import com.fablab.ufps.edu.co.asistencia.entity.Universidad;
 import com.fablab.ufps.edu.co.asistencia.entity.VisitaCurso;
-import com.fablab.ufps.edu.co.asistencia.entity.VisitaCursoColegio;
-import com.fablab.ufps.edu.co.asistencia.entity.VisitaSteamSchool;
-import com.fablab.ufps.edu.co.asistencia.entity.VisitaSteamYoung;
 import com.fablab.ufps.edu.co.asistencia.repository.PersonaRepository;
-import com.fablab.ufps.edu.co.asistencia.repository.PoblacionEspecialRepository;
 import com.fablab.ufps.edu.co.asistencia.repository.VisitaCursoColegioRepository;
 import com.fablab.ufps.edu.co.asistencia.repository.VisitaCursoRepository;
 import com.fablab.ufps.edu.co.asistencia.repository.VisitaSteamSchoolRepository;
@@ -60,30 +42,29 @@ public class ReporteAsistenciaCursoController {
     @Autowired
     private VisitaCursoColegioRepository visitaCursoColegioRepository;
 
-      @Autowired
+    @Autowired
     private VisitaSteamSchoolRepository visitaSteamSchoolRepository;
 
     @Autowired
     private VisitaSteamYoungRepository visitaSteamYoungRepository;
-    
-        @Autowired
+
+    @Autowired
     private PersonaRepository personaRepository;
 
-        
-            @GetMapping("/persona")
+    @GetMapping("/persona")
     public List<Object> listP() {
-              return personaRepository
+        return personaRepository
                 .findAll()
                 .stream()
-                .map(this::personaToPersonaReporteDTO)
+                .map(CommonReporte::personaToPersonaReporteJson)
                 .collect(Collectors.toList());
     }
-        
+
     @GetMapping()
     public List<Object> list() {
-        
-         List<ReporteGeneralCurso> combinedList = new ArrayList<>();
-      combinedList.addAll(listCurso());
+
+        List<ReporteGeneralCurso> combinedList = new ArrayList<>();
+        combinedList.addAll(listCurso());
         combinedList.addAll(listColegio());
         combinedList.addAll(listSchool());
         combinedList.addAll(listYoung());
@@ -94,7 +75,7 @@ public class ReporteAsistenciaCursoController {
     }
 
     @DeleteMapping("/{id}/{tipo}")
-    public ResponseEntity<?> delete(@PathVariable String id,@PathVariable String tipo ) {
+    public ResponseEntity<?> delete(@PathVariable String id, @PathVariable String tipo) {
 
         Optional<VisitaCurso> ou = visitaCursoRepository.findById(Integer.valueOf(id));
 
@@ -122,7 +103,7 @@ public class ReporteAsistenciaCursoController {
         return visitaCursoRepository
                 .findAll()
                 .stream()
-                .map(this::toReporteGeneralCurso)
+                .map(CommonReporte::visitaCursoToReporteGeneralCurso)
                 .collect(Collectors.toList());
     }
 
@@ -130,7 +111,7 @@ public class ReporteAsistenciaCursoController {
         return visitaCursoColegioRepository
                 .findAll()
                 .stream()
-                .map(this::toReporteGeneralCurso)
+                .map(CommonReporte::visitaCursoColegioToReporteGeneralCurso)
                 .collect(Collectors.toList());
     }
 
@@ -138,7 +119,7 @@ public class ReporteAsistenciaCursoController {
         return visitaSteamSchoolRepository
                 .findAll()
                 .stream()
-                .map(this::toReporteGeneralCurso)
+                .map(CommonReporte::visitaSteamSchoolToReporteGeneralCurso)
                 .collect(Collectors.toList());
     }
 
@@ -146,184 +127,8 @@ public class ReporteAsistenciaCursoController {
         return visitaSteamYoungRepository
                 .findAll()
                 .stream()
-                .map(this::toReporteGeneralCurso)
+                .map((CommonReporte::visitaSteamYoungToReporteGeneralCurso))
                 .collect(Collectors.toList());
-    }
-
-    private ReporteGeneralCurso toDTO(VisitaCurso x) {
-        ReporteCursoJson a = new ReporteCursoJson();
-
-        return toReporteGeneralCurso(x);
-
-    }
-
-    public ReporteGeneralCurso toReporteGeneralCurso(VisitaCurso v) {
-
-        ReporteGeneralCurso rg = new ReporteGeneralCurso();
-
-        rg.setId(v.getId());
-        rg.setFechaVisita(v.getFechaVisita());
-        rg.setSesion(v.getSesion());
-
-        rg.setOtroPrograma(v.getOtroPrograma());
-
-        rg.setIdCurso(cursoToDTO(v.getIdCurso()));
-        rg.setIdUniversidad(universidadToDTO(v.getIdUniversidad()));
-        rg.setIdProgramaAcademico(programaToDTO(v.getIdProgramaAcademico()));
-        rg.setIdPersona(personaToPersonaReporteDTO(v.getIdPersona()));
-
-        rg.setTipoConsulta("curso");
-
-        return rg;
-    }
-
-    public ReporteGeneralCurso toReporteGeneralCurso(VisitaCursoColegio v) {
-        ReporteGeneralCurso rg = new ReporteGeneralCurso();
-        rg.setId(v.getId());
-        rg.setFechaVisita(v.getFechaVisita());
-        rg.setSesion(v.getSesion());
-
-        rg.setIdCurso(cursoToDTO(v.getIdCurso()));
-        rg.setIdColegio(colegioToDTO(v.getIdColegio()));
-        rg.setIdPersona(personaToPersonaReporteDTO(v.getIdPersona()));
-
-        rg.setTipoConsulta("colegio");
-
-        return rg;
-    }
-
-    public ReporteGeneralCurso toReporteGeneralCurso(VisitaSteamSchool v) {
-
-        ReporteGeneralCurso rg = new ReporteGeneralCurso();
-
-        rg.setId(v.getId());
-        rg.setFechaVisita(v.getFecha());
-
-        rg.setIdCurso(cursoToDTO(v.getIdCurso()));
-        rg.setIdColegio(colegioToDTO(v.getIdColegio()));
-        rg.setIdPersona(SteamToPersonaReporteDTO(v.getIdSteamStudent()));
-
-        rg.setTipoConsulta("school");
-
-        return rg;
-
-    }
-
-    public ReporteGeneralCurso toReporteGeneralCurso(VisitaSteamYoung v) {
-
-        ReporteGeneralCurso rg = new ReporteGeneralCurso();
-
-        rg.setId(v.getId());
-        rg.setFechaVisita(v.getFecha());
-
-        rg.setIdCurso(cursoToDTO(v.getIdCurso()));
-        rg.setIdColegio(colegioToDTO(v.getIdColegio()));
-        rg.setIdPersona(SteamToPersonaReporteDTO(v.getIdSteamStudent()));
-
-        rg.setTipoConsulta("young");
-
-        return rg;
-
-    }
-
-    private ProgramaAcademicoDTO programaToDTO(ProgramaAcademico u) {
-        ProgramaAcademicoDTO ud = new ProgramaAcademicoDTO();
-
-        if (u == null) {
-            return null;
-        }
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        ud.setDescripcion(u.getDescripcion());
-
-        return ud;
-
-    }
-
-    private CursoDTO cursoToDTO(Cursos u) {
-        CursoDTO ud = new CursoDTO();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-
-        return ud;
-
-    }
-
-
-
-    private UniversidadDTO universidadToDTO(Universidad u) {
-        UniversidadDTO ud = new UniversidadDTO();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        ud.setDireccion(u.getDireccion());
-        ud.setTelContacto(u.getTelContacto());
-
-        return ud;
-
-    }
-
-    private PersonaReporteJson SteamToPersonaReporteDTO(SteamStudent u) {
-        PersonaReporteJson ud = new PersonaReporteJson();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        ud.setSexo(u.getSexo());
-        ud.setIdPoblacionEspecial(poblacionEspecialToDTO(u.getIdPoblacionEspecial()));
-
-        return ud;
-
-    }
-
-    private ColegioDTO colegioToDTO(Colegio u) {
-        ColegioDTO ud = new ColegioDTO();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        ud.setDireccion(u.getDireccion());
-        ud.setTelContacto(u.getTelContacto());
-
-        return ud;
-
-    }
-
-    private PersonaReporteJson personaToPersonaReporteDTO(Persona u) {
-        PersonaReporteJson ud = new PersonaReporteJson();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre() + ' ' + u.getApellido());
-        ud.setDocumento(u.getDocumento());
-        ud.setTelefono(u.getTelefono());
-        ud.setFechaNacimiento(u.getFechaNacimiento());
-        ud.setSexo(u.getSexo());
-        ud.setCodigo(u.getCodigo());
-        ud.setIdPoblacionEspecial(poblacionEspecialToDTO(u.getIdPoblacionEspecial()));
-        ud.setIdTipoUsuario(tipoUsuarioToDTO(u.getIdTipoUsuario()));
-
-        
-  
-        return ud;
-
-    }
-
-    private PoblacionEspecialDTO poblacionEspecialToDTO(PoblacionEspecial u) {
-        PoblacionEspecialDTO ud = new PoblacionEspecialDTO();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        return ud;
-
-    }
-
-    private TipoUsuarioDTO tipoUsuarioToDTO(TipoUsuario u) {
-        TipoUsuarioDTO ud = new TipoUsuarioDTO();
-
-        ud.setId(u.getId());
-        ud.setTipo(u.getTipo());
-        return ud;
-
     }
 
 }

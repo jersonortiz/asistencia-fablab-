@@ -29,6 +29,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
+ * Controller for managing AdmUser entities.
+ *
+ * <p>
+ * This controller provides endpoints for listing, retrieving, creating,
+ * updating, and deleting AdmUser entities. It also includes a login endpoint.
+ * </p>
+ *
+ * <p>
+ * All endpoints are prefixed with "/adm".
+ * </p>
+ *
+ * <p>
+ * Note: The login endpoint expects a JSON payload with "codigo" and
+ * "contraseña".
+ * </p>
+ *
+ * <p>
+ * Exception handling is provided for all endpoints, returning a 500 status with
+ * a generic error message in case of unhandled exceptions.
+ * </p>
  *
  * @author jerson
  */
@@ -42,6 +62,11 @@ public class AdmUserController {
     @Autowired
     private PersonaRepository personaRepository;
 
+    /**
+     * Lists all AdmUser entities.
+     *
+     * @return a list of AdmUserDTO objects
+     */
     @GetMapping()
     public ArrayList<AdmUserDTO> list() {
         ArrayList<AdmUser> aulas = (ArrayList<AdmUser>) admUserRepository.findAll();
@@ -57,6 +82,12 @@ public class AdmUserController {
         return lista;
     }
 
+    /**
+     * Handles login requests.
+     *
+     * @param user the login JSON payload
+     * @return a ResponseEntity containing a message or the user object
+     */
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody loginJson user) {
 
@@ -92,6 +123,12 @@ public class AdmUserController {
 
     }
 
+    /**
+     * Retrieves an AdmUser entity by its ID.
+     *
+     * @param id the ID of the AdmUser entity
+     * @return a ResponseEntity containing the AdmUserDTO or a message
+     */
     @GetMapping("/{id}")
     public Object get(@PathVariable String id) {
         Optional<AdmUser> ou = admUserRepository.findById(Integer.valueOf(id));
@@ -113,6 +150,13 @@ public class AdmUserController {
         return ResponseEntity.ok(u);
     }
 
+    /**
+     * Updates an AdmUser entity by its ID.
+     *
+     * @param id the ID of the AdmUser entity
+     * @param input the updated AdmUserDTO
+     * @return a ResponseEntity containing the updated AdmUserDTO or a message
+     */
     @PutMapping("/{id}")
     public ResponseEntity put(@PathVariable String id, @RequestBody AdmUserDTO input) {
         Optional<AdmUser> ou = admUserRepository.findById(Integer.valueOf(id));
@@ -135,6 +179,12 @@ public class AdmUserController {
         return new ResponseEntity(input, HttpStatus.ACCEPTED);
     }
 
+    /**
+     * Creates a new AdmUser entity.
+     *
+     * @param input the AdmUserDTO to be created
+     * @return a ResponseEntity containing the created AdmUserDTO
+     */
     @PostMapping
     public ResponseEntity post(@RequestBody AdmUserDTO input) {
 
@@ -152,6 +202,12 @@ public class AdmUserController {
         return new ResponseEntity(input, HttpStatus.ACCEPTED);
     }
 
+    /**
+     * Deletes an AdmUser entity by its ID.
+     *
+     * @param id the ID of the AdmUser entity
+     * @return a ResponseEntity containing a message
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
 
@@ -177,6 +233,9 @@ public class AdmUserController {
         }
     }
 
+    /**
+     * Handles exceptions and returns a generic error message.
+     */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Error message")
     public void handleError() {

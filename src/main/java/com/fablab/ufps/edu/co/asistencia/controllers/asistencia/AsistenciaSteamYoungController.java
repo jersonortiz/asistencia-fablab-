@@ -4,6 +4,7 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.asistencia;
 
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.json.AsistenciaSteamJson;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
 import com.fablab.ufps.edu.co.asistencia.dto.visita.VisitaSteamYoungDTO;
@@ -13,7 +14,6 @@ import com.fablab.ufps.edu.co.asistencia.entity.PoblacionEspecial;
 import com.fablab.ufps.edu.co.asistencia.entity.SteamStudent;
 import com.fablab.ufps.edu.co.asistencia.entity.VisitaSteamYoung;
 import com.fablab.ufps.edu.co.asistencia.repository.ColegioRepository;
-import com.fablab.ufps.edu.co.asistencia.repository.CursosRepository;
 import com.fablab.ufps.edu.co.asistencia.repository.PoblacionEspecialRepository;
 import com.fablab.ufps.edu.co.asistencia.repository.SteamStudentRepository;
 import com.fablab.ufps.edu.co.asistencia.repository.VisitaSteamYoungRepository;
@@ -55,7 +55,7 @@ public class AsistenciaSteamYoungController {
 
         return visitaSteamYoungRepository.findAll()
                 .stream()
-                .map(this::toDTO)
+                .map(CommonDTO::visitaSteamYoungToDTO)
                 .collect(Collectors.toList());
 
     }
@@ -110,15 +110,4 @@ public class AsistenciaSteamYoungController {
         }
     }
 
-    private VisitaSteamYoungDTO toDTO(VisitaSteamYoung x) {
-        VisitaSteamYoungDTO a = new VisitaSteamYoungDTO();
-
-        a.setIdColegio(x.getIdColegio().getId());
-        a.setIdCurso(x.getIdCurso().getId());
-        a.setIdSteamStudent(x.getIdSteamStudent().getId());
-        a.setFecha(x.getFecha());
-        a.setId(x.getId());
-        return a;
-
-    }
 }

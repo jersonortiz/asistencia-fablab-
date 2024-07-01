@@ -4,7 +4,6 @@
  */
 package com.fablab.ufps.edu.co.asistencia.dto.reporte;
 
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.PersonaDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.ProgramaAcademicoDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.SemilleroDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.UniversidadDTO;
@@ -36,7 +35,7 @@ public class ReporteGrabacionJson {
 
     private UniversidadDTO idUniversidad;
 
-    private PersonaDTO idPersona;
+    private PersonaReporteJson idPersona;
 
     private int razonGrabacion;
 }

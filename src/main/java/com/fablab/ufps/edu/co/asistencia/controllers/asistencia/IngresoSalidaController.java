@@ -4,18 +4,11 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.asistencia;
 
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.PoblacionEspecialDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.TipoUsuarioDTO;
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.IngresoSalidaDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
-import com.fablab.ufps.edu.co.asistencia.dto.reporte.PersonaReporteJson;
-import com.fablab.ufps.edu.co.asistencia.dto.reporte.ReporteIngresoSalidaJson;
-import com.fablab.ufps.edu.co.asistencia.entity.Aula;
 import com.fablab.ufps.edu.co.asistencia.entity.IngresoSalidaPersonal;
-import com.fablab.ufps.edu.co.asistencia.entity.Persona;
-import com.fablab.ufps.edu.co.asistencia.entity.PoblacionEspecial;
 import com.fablab.ufps.edu.co.asistencia.entity.PracticantepasanteBeca;
-import com.fablab.ufps.edu.co.asistencia.entity.TipoUsuario;
 import com.fablab.ufps.edu.co.asistencia.repository.IngresoSalidaPersonalRepository;
 import java.util.List;
 import java.util.Optional;
@@ -47,7 +40,7 @@ public class IngresoSalidaController {
         return ingresoSalidaPersonalRepository
                 .findAll()
                 .stream()
-                .map(this::toDTO)
+                .map(CommonDTO::ingresoSalidaPersonalToDTO)
                 .collect(Collectors.toList());
     }
 
@@ -126,57 +119,6 @@ public class IngresoSalidaController {
             msg.setMsg("no");
             return new ResponseEntity(msg, HttpStatus.BAD_REQUEST);
         }
-    }
-
-    private ReporteIngresoSalidaJson toDTO(IngresoSalidaPersonal input) {
-
-        ReporteIngresoSalidaJson i = new ReporteIngresoSalidaJson();
-
-        i.setId(input.getId());
-        i.setEntradaSalida(Boolean.TRUE);
-        i.setFechaIngreso(input.getFechaIngreso());
-        i.setFechaRegistro(input.getFechaIngreso());
-        i.setHora(input.getHora());
-
-        i.setIdPracticante(personaToPersonaReporteDTO(input.getIdPracticante().getIdPersona()));
-
-        return i;
-
-    }
-
-    private PersonaReporteJson personaToPersonaReporteDTO(Persona u) {
-        PersonaReporteJson ud = new PersonaReporteJson();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre() + ' ' + u.getApellido());
-        ud.setDocumento(u.getDocumento());
-        ud.setTelefono(u.getTelefono());
-        ud.setFechaNacimiento(u.getFechaNacimiento());
-        ud.setSexo(u.getSexo());
-        ud.setCodigo(u.getCodigo());
-        ud.setIdPoblacionEspecial(poblacionEspecialToDTO(u.getIdPoblacionEspecial()));
-        ud.setIdTipoUsuario(tipoUsuarioToDTO(u.getIdTipoUsuario()));
-
-        return ud;
-
-    }
-
-    private PoblacionEspecialDTO poblacionEspecialToDTO(PoblacionEspecial u) {
-        PoblacionEspecialDTO ud = new PoblacionEspecialDTO();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        return ud;
-
-    }
-
-    private TipoUsuarioDTO tipoUsuarioToDTO(TipoUsuario u) {
-        TipoUsuarioDTO ud = new TipoUsuarioDTO();
-
-        ud.setId(u.getId());
-        ud.setTipo(u.getTipo());
-        return ud;
-
     }
 
 }

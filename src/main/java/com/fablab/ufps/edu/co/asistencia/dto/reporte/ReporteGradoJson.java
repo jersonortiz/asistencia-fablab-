@@ -4,16 +4,19 @@
  */
 package com.fablab.ufps.edu.co.asistencia.dto.reporte;
 
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.PersonaDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.ProgramaAcademicoDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.UniversidadDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
  * @author jerson
  */
+@Getter
+@Setter
 public class ReporteGradoJson {
 
     private Integer id;
@@ -23,7 +26,7 @@ public class ReporteGradoJson {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyy-MM-dd", timezone = "UTC")
     private Date fecha;
 
-    private PersonaDTO idPersona;
+    private PersonaReporteJson idPersona;
 
     private ProgramaAcademicoDTO idProgramaAcademico;
 

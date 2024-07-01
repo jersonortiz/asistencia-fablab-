@@ -4,14 +4,17 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.crud;
 
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
+import com.fablab.ufps.edu.co.asistencia.common.CommonEntity;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.SemilleroDTO;
 import com.fablab.ufps.edu.co.asistencia.entity.Semillero;
 import com.fablab.ufps.edu.co.asistencia.repository.SemilleroRepository;
-import java.util.ArrayList;
+import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,123 +32,93 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @RequestMapping("/semillero")
 public class SemilleroController {
-    
+
     @Autowired
     private SemilleroRepository semilleroRepository;
-    
+
     @GetMapping()
-    public ResponseEntity list() {
-        ArrayList<Semillero> universidades = (ArrayList<Semillero>) semilleroRepository.findAll();
-        ArrayList<SemilleroDTO> lista = new ArrayList<>();
-        for (Semillero x : universidades) {
-            
-            SemilleroDTO u = toDTO(x);
-            
-            lista.add(u);
-        }
-        return ResponseEntity.ok(lista);
+    public List<Object> list() {
+        return semilleroRepository
+                .findAll()
+                .stream()
+                .map(CommonDTO::semilleroToDTO)
+                .collect(Collectors.toList());
     }
-    
+
     @GetMapping("/{id}")
     public Object get(@PathVariable String id) {
         Optional<Semillero> ou = semilleroRepository.findById(Integer.valueOf(id));
-        
+
         MensajeJson msg = new MensajeJson();
         if (ou.isEmpty()) {
-            
+
             msg.setMsg("no existe");
             return ResponseEntity.ok(msg);
         }
-        
-        SemilleroDTO u = toDTO(ou.get());
-        
+
+        SemilleroDTO u = CommonDTO.semilleroToDTO(ou.get());
+
         return ResponseEntity.ok(u);
     }
-    
+
     @PutMapping("/{id}")
     public ResponseEntity put(@PathVariable String id, @RequestBody SemilleroDTO input) {
         Optional<Semillero> ou = semilleroRepository.findById(Integer.valueOf(id));
-        
+
         MensajeJson msg = new MensajeJson();
         if (ou.isEmpty()) {
-            
+
             msg.setMsg("no existe");
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        
+
         Semillero u = ou.get();
         u.setNombre(input.getNombre());
         u.setSigla(input.getSigla());
-        
+
         u = semilleroRepository.save(u);
-        
+
         input.setId(u.getId());
-        
+
         return new ResponseEntity(input, HttpStatus.ACCEPTED);
     }
-    
+
     @PostMapping
     public ResponseEntity post(@RequestBody SemilleroDTO input) {
-        
-        Semillero u = toEntity(input);
-        
+
+        Semillero u = CommonEntity.SemilleroDTOToEntity(input);
+
         System.out.println(input);
         System.out.println(u);
         u = semilleroRepository.save(u);
         System.out.println(u);
         input.setId(u.getId());
-        
+
         return new ResponseEntity(input, HttpStatus.ACCEPTED);
     }
-    
+
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable String id) {
         Optional<Semillero> ou = semilleroRepository.findById(Integer.valueOf(id));
-        
+
         MensajeJson msg = new MensajeJson();
         if (ou.isEmpty()) {
             msg.setMsg("no existe");
             return new ResponseEntity(msg, HttpStatus.NOT_FOUND);
         }
-        
+
         Semillero u = ou.get();
-        
+
         try {
             semilleroRepository.delete(u);
-            
+
             msg.setMsg("ok");
             return new ResponseEntity(msg, HttpStatus.OK);
         } catch (Exception e) {
-            
+
             msg.setMsg("no");
             return new ResponseEntity(msg, HttpStatus.BAD_REQUEST);
         }
     }
-    
-    
-    
-  
-    
-    private SemilleroDTO toDTO(Semillero u) {
-        SemilleroDTO ud = new SemilleroDTO();
-        
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        ud.setSigla(u.getSigla());
-        
-        return ud;
-        
-    }
-    
-    private Semillero toEntity(SemilleroDTO u) {
-        Semillero ud = new Semillero();
-        
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        ud.setSigla(u.getSigla());
-        
-        return ud;
-        
-    }
-    
+
 }

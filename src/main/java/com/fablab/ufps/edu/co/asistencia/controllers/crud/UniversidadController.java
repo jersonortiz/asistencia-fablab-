@@ -4,14 +4,17 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.crud;
 
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.UniversidadDTO;
 import com.fablab.ufps.edu.co.asistencia.entity.Universidad;
 import com.fablab.ufps.edu.co.asistencia.repository.UniversidadRepository;
 import java.util.ArrayList;
+import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,21 +41,16 @@ public class UniversidadController {
     private UniversidadRepository universidadRepository;
 
     /*
-     public List<Object> list() {
+   
     
      */
-    @GetMapping("")
-    public ResponseEntity list() {
-
-        ArrayList<Universidad> universidades = (ArrayList<Universidad>) universidadRepository.findAll();
-        ArrayList<UniversidadDTO> lista = new ArrayList<>();
-        for (Universidad x : universidades) {
-
-            UniversidadDTO u = universidadToDTO(x);
-
-            lista.add(u);
-        }
-        return ResponseEntity.ok(lista);
+    @GetMapping()
+    public List<Object> list() {
+        return universidadRepository
+                .findAll()
+                .stream()
+                .map(CommonDTO::universidadToDTO)
+                .collect(Collectors.toList());
 
     }
 
@@ -68,7 +66,7 @@ public class UniversidadController {
             return ResponseEntity.ok(msg);
         }
 
-        UniversidadDTO u = universidadToDTO(ou.get());
+        UniversidadDTO u = CommonDTO.universidadToDTO(ou.get());
 
         return ResponseEntity.ok(u);
     }
@@ -93,7 +91,7 @@ public class UniversidadController {
         u = universidadRepository.save(u);
 
         input.setId(u.getId());
-        
+
         return new ResponseEntity(input, HttpStatus.ACCEPTED);
     }
 
@@ -142,18 +140,6 @@ public class UniversidadController {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Error message")
     public void handleError() {
-    }
-
-    private UniversidadDTO universidadToDTO(Universidad u) {
-        UniversidadDTO ud = new UniversidadDTO();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        ud.setDireccion(u.getDireccion());
-        ud.setTelContacto(u.getTelContacto());
-
-        return ud;
-
     }
 
 }

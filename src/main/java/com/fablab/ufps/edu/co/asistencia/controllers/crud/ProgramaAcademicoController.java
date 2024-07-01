@@ -4,12 +4,14 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.crud;
 
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.ProgramaAcademicoDTO;
 import com.fablab.ufps.edu.co.asistencia.entity.ProgramaAcademico;
 import com.fablab.ufps.edu.co.asistencia.repository.ProgramaAcademicoRepository;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,18 +35,13 @@ public class ProgramaAcademicoController {
     @Autowired
     private ProgramaAcademicoRepository programaAcademicoRepository;
 
-    @GetMapping("")
-    public ResponseEntity list() {
-
-        ArrayList<ProgramaAcademico> universidades = (ArrayList<ProgramaAcademico>) programaAcademicoRepository.findAll();
-        ArrayList<ProgramaAcademicoDTO> lista = new ArrayList<>();
-        for (ProgramaAcademico x : universidades) {
-
-            ProgramaAcademicoDTO u = toDTO(x);
-
-            lista.add(u);
-        }
-        return ResponseEntity.ok(lista);
+    @GetMapping()
+    public List<Object> list() {
+        return programaAcademicoRepository
+                .findAll()
+                .stream()
+                .map(CommonDTO::programaToDTO)
+                .collect(Collectors.toList());
 
     }
 
@@ -60,7 +57,7 @@ public class ProgramaAcademicoController {
             return ResponseEntity.ok(msg);
         }
 
-        ProgramaAcademicoDTO u = toDTO(ou.get());
+        ProgramaAcademicoDTO u = CommonDTO.programaToDTO(ou.get());
 
         return ResponseEntity.ok(u);
     }
@@ -95,10 +92,7 @@ public class ProgramaAcademicoController {
         u.setNombre(input.getNombre());
         u.setDescripcion(input.getDescripcion());
 
-        System.out.println(input);
-        System.out.println(u);
         u = programaAcademicoRepository.save(u);
-        System.out.println(u);
         input.setId(u.getId());
 
         return new ResponseEntity(input, HttpStatus.ACCEPTED);
@@ -127,17 +121,6 @@ public class ProgramaAcademicoController {
             msg.setMsg("no");
             return new ResponseEntity(msg, HttpStatus.BAD_REQUEST);
         }
-
-    }
-
-    private ProgramaAcademicoDTO toDTO(ProgramaAcademico u) {
-        ProgramaAcademicoDTO ud = new ProgramaAcademicoDTO();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        ud.setDescripcion(u.getDescripcion());
-
-        return ud;
 
     }
 

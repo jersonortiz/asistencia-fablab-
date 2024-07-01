@@ -4,6 +4,7 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.crud;
 
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,10 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.fablab.ufps.edu.co.asistencia.entity.Colegio;
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.ColegioDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.SteamStudentDTO;
-import com.fablab.ufps.edu.co.asistencia.entity.SteamStudent;
 import com.fablab.ufps.edu.co.asistencia.repository.ColegioRepository;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,14 +38,12 @@ public class ColegioController {
     private ColegioRepository colegioRepository;
 
     @GetMapping()
-    public ResponseEntity list() {
-        List<Colegio> colegios = colegioRepository.findAll();
-
-        List<ColegioDTO> lista = colegios.stream()
-                .map(this::colegioToDTO)
+    public List<Object> list() {
+        return colegioRepository
+                .findAll()
+                .stream()
+                .map(CommonDTO::colegioToDTO)
                 .collect(Collectors.toList());
-
-        return ResponseEntity.ok(lista);
     }
 
     @GetMapping("/{id}")
@@ -61,31 +57,11 @@ public class ColegioController {
             return ResponseEntity.ok(msg);
         }
 
-        ColegioDTO u = colegioToDTO(ou.get());
+        ColegioDTO u = CommonDTO.colegioToDTO(ou.get());
 
         return ResponseEntity.ok(u);
     }
-/*
-    @GetMapping("/steam/{id}")
-    public ResponseEntity<Object> getSteam(@PathVariable Integer id) {
-        try {
 
-            List<SteamStudentDTO> lista = colegioRepository.findById(id)
-                    .map(Colegio::getSteamStudentList)
-                    .orElse(Collections.emptyList())
-                    .stream()
-                    .map(this::SteamStudentToDTO)
-                    .collect(Collectors.toList());
-
-            return ResponseEntity.ok(lista);
-        } catch (Exception e) {
-            e.printStackTrace(); // Imprimir la traza de la excepción en los registros
-            MensajeJson errorMsg = new MensajeJson();
-            errorMsg.setMsg("Error interno del servidor");
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMsg);
-        }
-    }
-*/
     @PutMapping("/{id}")
     public ResponseEntity put(@PathVariable String id, @RequestBody ColegioDTO input) {
 
@@ -155,29 +131,4 @@ public class ColegioController {
     public void handleError() {
     }
 
-    private ColegioDTO colegioToDTO(Colegio u) {
-        ColegioDTO ud = new ColegioDTO();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        ud.setDireccion(u.getDireccion());
-        ud.setTelContacto(u.getTelContacto());
-
-        return ud;
-
-    }
-
-    private SteamStudentDTO SteamStudentToDTO(SteamStudent u) {
-        SteamStudentDTO ud = new SteamStudentDTO();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        ud.setSexo(u.getSexo());
-        ud.setSemestre(u.getSemestre());
-        ud.setIdPoblacionEspecial(u.getIdPoblacionEspecial().getId());
-        ud.setIdColegio(u.getIdColegio().getId());
-
-        return ud;
-
-    }
 }

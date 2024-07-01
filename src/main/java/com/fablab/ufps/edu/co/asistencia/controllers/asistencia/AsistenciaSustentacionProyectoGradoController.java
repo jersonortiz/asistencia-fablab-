@@ -4,20 +4,17 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.asistencia;
 
-import com.fablab.ufps.edu.co.asistencia.dto.json.AsistenciaSocializacionJson;
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
+import com.fablab.ufps.edu.co.asistencia.common.CommonReporte;
 import com.fablab.ufps.edu.co.asistencia.dto.json.AsistenciaSustentacionProyectoGradoJson;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
-import com.fablab.ufps.edu.co.asistencia.dto.visita.VisitaSocializacionDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.visita.VisitaSustentacionProyectoGradoDTO;
 import com.fablab.ufps.edu.co.asistencia.entity.Persona;
 import com.fablab.ufps.edu.co.asistencia.entity.PoblacionEspecial;
 import com.fablab.ufps.edu.co.asistencia.entity.ProgramaAcademico;
 import com.fablab.ufps.edu.co.asistencia.entity.TipoUsuario;
 import com.fablab.ufps.edu.co.asistencia.entity.Universidad;
-import com.fablab.ufps.edu.co.asistencia.entity.VisitaSocializacion;
 import com.fablab.ufps.edu.co.asistencia.entity.VisitaSustentacionProyectoGrado;
 import com.fablab.ufps.edu.co.asistencia.repository.PersonaRepository;
-import com.fablab.ufps.edu.co.asistencia.repository.VisitaSocializacionRepository;
 import com.fablab.ufps.edu.co.asistencia.repository.VisitaSustentacionProyectoGradoRepository;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,7 +50,16 @@ public class AsistenciaSustentacionProyectoGradoController {
         return visitaSustentacionProyectoGradoRepository
                 .findAll()
                 .stream()
-                .map(this::toDTO)
+                .map(CommonDTO::visitaSustentacionProyectoGradoToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/reporte")
+    public List<Object> reporte() {
+        return visitaSustentacionProyectoGradoRepository
+                .findAll()
+                .stream()
+                .map(CommonReporte::visitaSustentacionProyectoGradoToJson)
                 .collect(Collectors.toList());
     }
 
@@ -131,26 +137,6 @@ public class AsistenciaSustentacionProyectoGradoController {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al crear el estudiante", e);
         }
-    }
-
-    private VisitaSustentacionProyectoGradoDTO toDTO(VisitaSustentacionProyectoGrado x) {
-        VisitaSustentacionProyectoGradoDTO a = new VisitaSustentacionProyectoGradoDTO();
-
-        a.setId(x.getId());
-        a.setFecha(x.getFecha());
-
-        if (x.getIdProgramaAcademico() != null) {
-            a.setIdProgramaAcademico(x.getIdProgramaAcademico().getId());
-
-        }
-
-        a.setOtroPrograma(x.getOtroPrograma());
-
-        a.setIdPersona(x.getIdPersona().getId());
-        a.setIdUniversidad(x.getIdUniversidad().getId());
-
-        return a;
-
     }
 
 }

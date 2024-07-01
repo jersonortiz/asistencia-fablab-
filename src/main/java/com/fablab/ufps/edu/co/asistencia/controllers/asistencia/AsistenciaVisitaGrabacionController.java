@@ -4,8 +4,9 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.asistencia;
 
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
+import com.fablab.ufps.edu.co.asistencia.common.CommonReporte;
 import com.fablab.ufps.edu.co.asistencia.dto.json.AsistenciaGrabacionJson;
-import com.fablab.ufps.edu.co.asistencia.dto.visita.VisitaGrabacionDTO;
 import com.fablab.ufps.edu.co.asistencia.entity.Persona;
 import com.fablab.ufps.edu.co.asistencia.entity.PoblacionEspecial;
 import com.fablab.ufps.edu.co.asistencia.entity.ProgramaAcademico;
@@ -47,7 +48,16 @@ public class AsistenciaVisitaGrabacionController {
         return visitaGrabacionRepository
                 .findAll()
                 .stream()
-                .map(this::toDTO)
+                .map(CommonDTO::visitaGrabacionToDTO)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/reporte")
+    public List<Object> reporte() {
+        return visitaGrabacionRepository
+                .findAll()
+                .stream()
+                .map(CommonReporte::visitaGrabacionToJson)
                 .collect(Collectors.toList());
     }
 
@@ -129,34 +139,6 @@ public class AsistenciaVisitaGrabacionController {
         ud = personaRepository.save(ud);
 
         return ud;
-
-    }
-
-    private VisitaGrabacionDTO toDTO(VisitaGrabacion x) {
-        VisitaGrabacionDTO a = new VisitaGrabacionDTO();
-        System.out.println(x.toString());
-
-        a.setId(x.getId());
-        a.setFecha(x.getFecha());
-        a.setIdPersona(x.getIdPersona().getId());
-
-        if (x.getIdSemillero() != null) {
-
-            a.setIdSemillero(x.getIdSemillero().getId());
-        }
-
-        a.setExterno(x.getExterno());
-        a.setOtroPrograma(x.getOtroPrograma());
-        a.setRazonGrabacion(x.getRazonGrabacion());
-
-        if (x.getIdProgramaAcademico() != null) {
-            a.setIdProgramaAcademico(x.getIdProgramaAcademico().getId());
-
-        }
-
-        a.setIdUniversidad(x.getIdUniversidad().getId());
-
-        return a;
 
     }
 

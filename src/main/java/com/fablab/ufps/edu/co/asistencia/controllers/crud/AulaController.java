@@ -4,14 +4,16 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.crud;
 
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.AulaDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
 import com.fablab.ufps.edu.co.asistencia.entity.Aula;
 import com.fablab.ufps.edu.co.asistencia.repository.AulaRepository;
-import java.util.ArrayList;
+import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,18 +38,14 @@ public class AulaController {
     private AulaRepository aulaRepository;
 
     @GetMapping()
-    public ArrayList<AulaDTO> list() {
-        ArrayList<Aula> aulas = (ArrayList<Aula>) aulaRepository.findAll();
-        ArrayList<AulaDTO> lista = new ArrayList<>();
-        for (Aula x : aulas) {
+    public List<Object> list() {
 
-            AulaDTO a = new AulaDTO();
-            a.setId(x.getId());
-            a.setNombre(x.getNombre());
+        return aulaRepository
+                .findAll()
+                .stream()
+                .map(CommonDTO::aulaToDTO)
+                .collect(Collectors.toList());
 
-            lista.add(a);
-        }
-        return lista;
     }
 
     @GetMapping("/{id}")
@@ -61,12 +59,7 @@ public class AulaController {
             return ResponseEntity.ok(msg);
         }
 
-        Aula a = ou.get();
-
-        AulaDTO u = new AulaDTO();
-
-        u.setId(a.getId());
-        u.setNombre(a.getNombre());
+        AulaDTO u = CommonDTO.aulaToDTO(ou.get());
 
         return ResponseEntity.ok(u);
     }

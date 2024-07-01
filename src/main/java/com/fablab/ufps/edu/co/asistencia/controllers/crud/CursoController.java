@@ -4,14 +4,16 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.crud;
 
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.CursoDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
 import com.fablab.ufps.edu.co.asistencia.entity.Cursos;
 import com.fablab.ufps.edu.co.asistencia.repository.CursosRepository;
-import java.util.ArrayList;
+import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,18 +38,14 @@ public class CursoController {
     private CursosRepository cursoRepository;
 
     @GetMapping()
-    public ResponseEntity list() {
-        ArrayList<Cursos> aulas = (ArrayList<Cursos>) cursoRepository.findAll();
-        ArrayList<CursoDTO> lista = new ArrayList<>();
-        for (Cursos x : aulas) {
+    public List<Object> list() {
 
-            CursoDTO a = new CursoDTO();
-            a.setId(x.getId());
-            a.setNombre(x.getNombre());
+        return cursoRepository
+                .findAll()
+                .stream()
+                .map(CommonDTO::cursoToDTO)
+                .collect(Collectors.toList());
 
-            lista.add(a);
-        }
-        return ResponseEntity.ok(lista);
     }
 
     @GetMapping("/{id}")
@@ -61,12 +59,7 @@ public class CursoController {
             return ResponseEntity.ok(msg);
         }
 
-        Cursos a = ou.get();
-
-        CursoDTO u = new CursoDTO();
-
-        u.setId(a.getId());
-        u.setNombre(a.getNombre());
+        CursoDTO u = CommonDTO.cursoToDTO(ou.get());
 
         return ResponseEntity.ok(u);
     }

@@ -4,14 +4,16 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.crud;
 
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.PoblacionEspecialDTO;
 import com.fablab.ufps.edu.co.asistencia.entity.PoblacionEspecial;
 import com.fablab.ufps.edu.co.asistencia.repository.PoblacionEspecialRepository;
-import java.util.ArrayList;
+import java.util.List;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,18 +36,14 @@ public class PoblacionEspecialController {
     private PoblacionEspecialRepository poblacionEspecialRepository;
 
     @GetMapping()
-    public ResponseEntity list() {
-        ArrayList<PoblacionEspecial> poblaciones = (ArrayList<PoblacionEspecial>) poblacionEspecialRepository.findAll();
-        ArrayList<PoblacionEspecialDTO> lista = new ArrayList<>();
-        for (PoblacionEspecial x : poblaciones) {
+    public List<Object> list() {
 
-            PoblacionEspecialDTO a = new PoblacionEspecialDTO();
-            a.setId(x.getId());
-            a.setNombre(x.getNombre());
+        return poblacionEspecialRepository
+                .findAll()
+                .stream()
+                .map(CommonDTO::poblacionEspecialToDTO)
+                .collect(Collectors.toList());
 
-            lista.add(a);
-        }
-        return ResponseEntity.ok(lista);
     }
 
     @GetMapping("/{id}")
@@ -59,12 +57,7 @@ public class PoblacionEspecialController {
             return ResponseEntity.ok(msg);
         }
 
-        PoblacionEspecial a = ou.get();
-
-        PoblacionEspecialDTO u = new PoblacionEspecialDTO();
-
-        u.setId(a.getId());
-        u.setNombre(a.getNombre());
+        PoblacionEspecialDTO u = CommonDTO.poblacionEspecialToDTO(ou.get());
 
         return ResponseEntity.ok(u);
     }

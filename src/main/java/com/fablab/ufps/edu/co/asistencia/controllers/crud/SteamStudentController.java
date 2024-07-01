@@ -4,14 +4,16 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.crud;
 
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.SteamStudentDTO;
 import com.fablab.ufps.edu.co.asistencia.entity.Colegio;
 import com.fablab.ufps.edu.co.asistencia.entity.PoblacionEspecial;
 import com.fablab.ufps.edu.co.asistencia.entity.SteamStudent;
 import com.fablab.ufps.edu.co.asistencia.repository.SteamStudentRepository;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,18 +37,14 @@ public class SteamStudentController {
     @Autowired
     private SteamStudentRepository steamStudentRepository;
 
-    @GetMapping("")
-    public ResponseEntity list() {
+    @GetMapping()
+    public List<Object> list() {
 
-        ArrayList<SteamStudent> universidades = (ArrayList<SteamStudent>) steamStudentRepository.findAll();
-        ArrayList<SteamStudentDTO> lista = new ArrayList<>();
-        for (SteamStudent x : universidades) {
-
-            SteamStudentDTO u = toDTO(x);
-
-            lista.add(u);
-        }
-        return ResponseEntity.ok(lista);
+        return steamStudentRepository
+                .findAll()
+                .stream()
+                .map(CommonDTO::SteamStudentToDTO)
+                .collect(Collectors.toList());
 
     }
 
@@ -62,7 +60,7 @@ public class SteamStudentController {
             return ResponseEntity.ok(msg);
         }
 
-        SteamStudentDTO u = toDTO(ou.get());
+        SteamStudentDTO u = CommonDTO.SteamStudentToDTO(ou.get());
 
         return ResponseEntity.ok(u);
     }
@@ -153,17 +151,4 @@ public class SteamStudentController {
 
     }
 
-    private SteamStudentDTO toDTO(SteamStudent u) {
-        SteamStudentDTO ud = new SteamStudentDTO();
-
-        ud.setId(u.getId());
-        ud.setNombre(u.getNombre());
-        ud.setSexo(u.getSexo());
-        ud.setSemestre(u.getSemestre());
-        ud.setIdPoblacionEspecial(u.getIdPoblacionEspecial().getId());
-        ud.setIdColegio(u.getIdColegio().getId());
-
-        return ud;
-
-    }
 }

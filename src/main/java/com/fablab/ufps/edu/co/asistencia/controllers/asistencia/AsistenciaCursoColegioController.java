@@ -4,6 +4,7 @@
  */
 package com.fablab.ufps.edu.co.asistencia.controllers.asistencia;
 
+import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
 import com.fablab.ufps.edu.co.asistencia.dto.json.AsistenciaCursoColegioJson;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
 import com.fablab.ufps.edu.co.asistencia.dto.visita.VisitaCursoColegioDTO;
@@ -49,7 +50,7 @@ public class AsistenciaCursoColegioController {
         return visitaCursoColegioRepository
                 .findAll()
                 .stream()
-                .map(this::toDTO)
+                .map(CommonDTO::visitaCursoColegioToDTO)
                 .collect(Collectors.toList());
     }
 
@@ -120,18 +121,6 @@ public class AsistenciaCursoColegioController {
         }
     }
 
-    private VisitaCursoColegioDTO toDTO(VisitaCursoColegio x) {
-        VisitaCursoColegioDTO a = new VisitaCursoColegioDTO();
-
-        a.setId(x.getId());
-        a.setFechaVisita(x.getFechaVisita());
-        a.setSesion(x.getSesion());
-        a.setIdColegio(x.getIdColegio().getId());
-        a.setIdCurso(x.getIdCurso().getId());
-        a.setIdPersona(x.getIdPersona().getId());
-
-        return a;
-
-    }
+   
 
 }
