@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="../../dist/js/config.js"></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>FABLAB </title>
+
+        <!-- Google Font: Source Sans Pro -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css">
+
+
+
+    </head>
+    <body class="hold-transition sidebar-mini">
+        <!-- Site wrapper -->
+        <div class="wrapper">
+
+
+            <!-- Placeholder for Header -->
+            <div id="header"></div>
+            <!-- Placeholder for Sidebar -->
+            <div id="sidebar"></div>
+
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1>Registrar Asistencia</h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active">Registrar Asistencia</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div><!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+
+                    <!-- Default box -->
+                    <div class="card card-outline card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                Registrar Asistencia
+                            </h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+
+                            <form id="registroForm" name="registroForm">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="hora">Hora</label>
+                                        <div>
+                                            <input type="radio" id="horaManana" name="horaOption" value="manana" checked>
+                                            <label for="horaManana">Mañana (8:00 - 12:00)</label>
+                                            <input type="radio" id="horaTarde" name="horaOption" value="tarde">
+                                            <label for="horaTarde">Tarde (14:00 - 18:00)</label>
+                                            <input type="radio" id="horaPersonalizada" name="horaOption" value="personalizada">
+                                            <label for="horaPersonalizada">Hora Personalizada</label>
+                                        </div>
+                                        <input type="time" class="form-control mt-2" id="hora" name="hora" style="display: none;" placeholder="Seleccione la hora" required>
+                                        <span></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fechaIngreso">Fecha de Ingreso</label>
+                                        <div>
+                                            <input type="radio" id="fechaHoy" name="fechaIngresoOption" value="hoy" checked>
+                                            <label for="fechaHoy">Hoy</label>
+                                            <input type="radio" id="fechaPersonalizada" name="fechaIngresoOption" value="personalizada">
+                                            <label for="fechaPersonalizada">Fecha Personalizada</label>
+                                        </div>
+                                        <input type="text" class="form-control mt-2" id="fechaIngreso" name="fechaIngreso" style="display: none;" placeholder="Seleccione la fecha">
+                                        <span></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="entradaSalida">Entrada/Salida</label>
+                                        <div>
+                                            <input type="radio" id="entrada" name="entradaSalida" value="true" checked>
+                                            <label for="entrada">Entrada</label>
+                                            <input type="radio" id="salida" name="entradaSalida" value="false">
+                                            <label for="salida">Salida</label>
+                                        </div>
+                                        <span></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="idPracticante">Practicante</label>
+                                        <select class="form-control" id="idPracticante" name="idPracticante" required>
+                                            <option value="">Seleccione un practicante</option>
+                                            <!-- Opciones dinámicas -->
+                                        </select>
+                                        <span></span>
+                                    </div>
+                                    <!-- Campo oculto para fecha de registro -->
+                                    <input type="hidden" id="fechaRegistro" name="fechaRegistro">
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                    <button type="button" class="btn btn-secondary" onclick="window.location.href = 'index.html'">Cancelar</button>
+                                </div>
+                            </form>
+
+                        </div>
+                        <div class="card-footer">
+
+
+                        </div>
+                    </div>
+
+
+
+
+
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+
+            <!-- Placeholder for Footer -->
+            <div id="footer"></div>
+        </div>
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- jQuery -->
+    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- jquery-validation -->
+    <script src="../../plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="../../plugins/jquery-validation/additional-methods.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../../dist/js/adminlte.min.js"></script>
+    <script>
+                            $(function () {
+                                $("#header").load("../templates/header.html");
+                                $("#sidebar").load("../templates/sidebar.html");
+                                $("#footer").load("../templates/footer.html");
+                            });
+    </script>
+
+    <script src="../../dist/js/session.js"></script>
+
+
+
+    <script src="../../dist/js/registroasistencia.js"></script>
+
+</body>
+</html>

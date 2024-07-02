@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <script src="../../dist/js/config.js"></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Fablab Asistencia a Cursos</title>
+
+        <!-- Google Font: Source Sans Pro -->
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+        <!-- Select2 -->
+        <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    </head>
+
+    <body class="hold-transition sidebar-mini">
+        <div class="wrapper">
+
+
+            <!-- Placeholder for Header -->
+            <div id="header"></div>
+            <!-- Placeholder for Sidebar -->
+            <div id="sidebar"></div>
+
+
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <h2 class="text-center display-4">Asistencias a Clases</h2>
+                    </div>
+                    <!-- /.container-fluid -->
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="container-fluid">
+
+
+                        <div class="card">
+                            <div class="card-header">
+
+                                <span> Asistencias a clases en las instalaciones de FABLAB</span>
+
+                            </div>
+
+                            <div class="card-body table-responsive p-0" >
+                                <table id="example2" class="table table-bordered table-hover table-striped text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Nombre Completo</th>
+                                            <th>Genero</th>
+                                            <th>Nombre Docente</th>
+                                            <th>Codigo carrera</th>
+                                            <th>Materia</th>
+                                            <th>Programa Academico</th>
+                                            <th>Universidad</th>
+                                            <th>A que población especial pertenece</th>
+                                        </tr>
+                                        <tr>
+                                            <th><input type="text" id="filter-fecha" placeholder="Filtrar Fecha"></th>
+                                            <th><input type="text" id="filter-nombre" placeholder="Filtrar Nombre"></th>
+                                            <th>
+                                                <select id="filter-genero">
+                                                    <option value="">Todos</option>
+                                                    <option value="M">M</option>
+                                                    <option value="F">F</option>
+                                                </select>
+                                            </th>
+                                            <th><input type="text" id="filter-docente" placeholder="Nombre Docente"></th>
+                                            <th><input type="text" id="filter-codigo" placeholder="Codigo Carrera"></th>
+                                            <th><input type="text" id="filter-materia" placeholder="Filtrar Materia"></th>
+                                            <th><select id="filter-programa"><option value="">Todos</option></select></th>
+                                            <th><select id="filter-universidad"><option value="">Todos</option></select></th>
+                                            <th><select id="filter-poblacion"><option value="">Todos</option></select></th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="colegiotable"></tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-10 offset-md-1">
+
+                            </div>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
+
+            <!-- Placeholder for Footer -->
+            <div id="footer"></div>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery -->
+        <script src="../../plugins/jquery/jquery.min.js"></script>
+        <!-- Bootstrap 4 -->
+        <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Select2 -->
+        <script src="../../plugins/select2/js/select2.full.min.js"></script>
+        <!-- AdminLTE App -->
+        <script src="../../dist/js/adminlte.min.js"></script>
+        <script>
+            $(function () {
+                $("#header").load("../templates/header.html");
+                $("#sidebar").load("../templates/sidebar.html");
+                $("#footer").load("../templates/footer.html");
+            });
+        </script>
+        <!-- AdminLTE App -->
+
+
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+        <script src="../../dist/js/session.js"></script>
+
+        <script src="../../dist/js/reporte/reporteclase.js"></script>
+
+
+
+
+        <script>
+                   $(function () {
+                       $('.select2').select2()
+                   });
+        </script>
+    </body>
+
+</html>
