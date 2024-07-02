@@ -16,11 +16,11 @@ $(document).ready(function () {
 
 
 function registrar() {
-    let loadurl = url + 'visitasemillero';
+    let loadurl = url + 'grabacion';
 
   // Obtener los valores de los campos del formulario
    
-    let fecha = $("#fecha").val();
+    //let fecha = $("#fecha").val();
    
     let otroPrograma = $("#otroPrograma").val();
     let idSemillero = $("#idSemillero").val();
@@ -36,6 +36,8 @@ function registrar() {
     let sexo = $("#sexo").val();
     let idPoblacionEspecial = $("#idPoblacionEspecial").val();
     let idTipoUsuario = $("#idTipoUsuario").val();
+
+     let fecha = new Date().toISOString().split('T')[0];
 
     // Crear objeto con los datos del formulario
     let data = {

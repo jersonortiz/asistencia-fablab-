@@ -10,6 +10,9 @@ $(document).ready(function () {
     cargaraula();
     cargaruniversidad();
     cargarprograma();
+      
+
+ 
 
 });
 
@@ -28,7 +31,7 @@ function registrar() {
     let sexo = $("#sexo").val();
     let idPoblacionEspecial = $("#idPoblacionEspecial").val();
     let idTipoUsuario = $("#idTipoUsuario").val();
-    let fecha = $("#fecha").val();
+    //let fecha = $("#fecha").val();
     let otroPrograma = $("#otroPrograma").val();
     let otroUniversidad = $("#otroUniversidad").val();
     let codigoCarrera = $("#codigoCarrera").val();
@@ -38,6 +41,9 @@ function registrar() {
     let idPersona = $("#idPersona").val();
     let idProgramaAcademico = $("#idProgramaAcademico").val();
     let idUniversidad = $("#idUniversidad").val();
+
+    let fecha = new Date().toISOString().split('T')[0];
+
 
     if (idProgramaAcademico === 'otro') {
         idProgramaAcademico = '';
@@ -80,7 +86,7 @@ function registrar() {
 
                 console.log(data);
                 alert("se ha registrado la asistencia");
-                //location.href = "./colegio.html";
+                location.href = "./clase.html";
 
             });
 

@@ -37,6 +37,16 @@
                 <span class="brand-text font-weight-light">Registro de Asistencia</span>
             </a>
         </div>
+
+        <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link"  href="./login.html" role="button">
+              <i class="fas fa-wrench"></i>
+            </a>
+        </li>
+
+        </ul>
+
     </nav>
     <!-- /.navbar -->
 
@@ -113,10 +123,10 @@
 
         switch (tipo) {
             case "steam_school":
-                location.href = "./asistencia/colegio.html";
+                location.href = "./asistencia/school.html";
                 break;
             case "steam_young":
-                console.log("This is a banana.");
+                location.href = "./asistencia/young.html";
                 break;
             case "cursos":
                 location.href = "./asistencia/curso.html";

@@ -156,85 +156,85 @@ function renderTable(data) {
     });
     $('#colegiotable').append(fill);
 
-if ($.fn.DataTable.isDataTable("#example2")) {
-    $('#example2').DataTable().destroy();
-}
-$("#example2").DataTable({
-    "searching": false,
-    "ordering": true,
-    "buttons": [
-        {
-            extend: 'copy',
-            exportOptions: {
-                columns: ':visible',
-                orthogonal: 'export',
-                modifier: {
-                    order: 'index',
-                    page: 'all',
-                    search: 'none'
-                },
-                rows: ':not(:first)'
+    if ($.fn.DataTable.isDataTable("#example2")) {
+        $('#example2').DataTable().destroy();
+    }
+    $("#example2").DataTable({
+        "searching": false,
+        "ordering": true,
+        "buttons": [
+            {
+                extend: 'copy',
+                exportOptions: {
+                    columns: ':visible',
+                    orthogonal: 'export',
+                    modifier: {
+                        order: 'index',
+                        page: 'all',
+                        search: 'none'
+                    },
+                    rows: ':not(:first)'
+                }
+            },
+            {
+                extend: 'csv',
+                exportOptions: {
+                    columns: ':visible',
+                    orthogonal: 'export',
+                    modifier: {
+                        order: 'index',
+                        page: 'all',
+                        search: 'none'
+                    },
+                    rows: ':not(:first)'
+                }
+            },
+            {
+                extend: 'excel',
+                exportOptions: {
+                    columns: ':visible',
+                    orthogonal: 'export',
+                    modifier: {
+                        order: 'index',
+                        page: 'all',
+                        search: 'none'
+                    },
+                    rows: ':not(:first)'
+                }
+            },
+            {
+                extend: 'pdf',
+                exportOptions: {
+                    columns: ':visible',
+                    orthogonal: 'export',
+                    modifier: {
+                        order: 'index',
+                        page: 'all',
+                        search: 'none'
+                    },
+                    rows: ':not(:first)'
+                }
+            },
+            {
+                extend: 'print',
+                exportOptions: {
+                    columns: ':visible',
+                    orthogonal: 'export',
+                    modifier: {
+                        order: 'index',
+                        page: 'all',
+                        search: 'none'
+                    },
+                    rows: ':not(:first)'
+                }
             }
-        },
-        {
-            extend: 'csv',
-            exportOptions: {
-                columns: ':visible',
-                orthogonal: 'export',
-                modifier: {
-                    order: 'index',
-                    page: 'all',
-                    search: 'none'
-                },
-                rows: ':not(:first)'
+        ],
+        "initComplete": function () {
+                // Move the tfoot to be just after the thead
+                $('#example2 tfoot').insertAfter('#example2 thead');
             }
-        },
-        {
-            extend: 'excel',
-            exportOptions: {
-                columns: ':visible',
-                orthogonal: 'export',
-                modifier: {
-                    order: 'index',
-                    page: 'all',
-                    search: 'none'
-                },
-                rows: ':not(:first)'
-            }
-        },
-        {
-            extend: 'pdf',
-            exportOptions: {
-                columns: ':visible',
-                orthogonal: 'export',
-                modifier: {
-                    order: 'index',
-                    page: 'all',
-                    search: 'none'
-                },
-                rows: ':not(:first)'
-            }
-        },
-        {
-            extend: 'print',
-            exportOptions: {
-                columns: ':visible',
-                orthogonal: 'export',
-                modifier: {
-                    order: 'index',
-                    page: 'all',
-                    search: 'none'
-                },
-                rows: ':not(:first)'
-            }
-        }
-    ],
-    "initComplete": function () {
-            // Move the tfoot to be just after the thead
-            $('#example2 tfoot').insertAfter('#example2 thead');
-        }
-}).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
-}
+    }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
+    }
 
 function attachFilterEvents(data) {
     $('#filter-fecha').on('input', function() { applyFilters(data); });

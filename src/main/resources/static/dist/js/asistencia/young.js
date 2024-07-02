@@ -16,7 +16,7 @@ $(document).ready(function () {
 
 function registrar() {
    
-   let loadurl = url + 'steam';
+   let loadurl = url + 'young';
 
     // Obtener los valores de los campos del formulario
     let fecha = new Date().toISOString().split('T')[0]; // Capturar la fecha actual en formato YYYY-MM-DD
@@ -24,8 +24,13 @@ function registrar() {
     let idCursos = document.getElementById('idCurso').value;
     let nombre = document.getElementById('nombre').value;
     let sexo = document.getElementById('sexo').value;
-    let semestre = document.getElementById('semestre').value;
+    //let semestre = document.getElementById('semestre').value;
     let idPoblacionEspecial = document.getElementById('idPoblacionEspecial').value;
+
+   let fechaActual = new Date();
+    let año = fechaActual.getFullYear();
+    let mes = fechaActual.getMonth() + 1; // Los meses en JavaScript son de 0 a 11, por eso sumamos 1.
+    let semestre = mes < 7 ? `${año}-1` : `${año}-2`;
 
     // Crear objeto con los datos del formulario
     let data = {

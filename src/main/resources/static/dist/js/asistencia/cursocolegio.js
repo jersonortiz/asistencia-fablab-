@@ -17,7 +17,7 @@ function registrar() {
 
   // Obtener los valores de los campos del formulario
    
-    let fechaVisita = $("#fechaVisita").val();
+    //let fechaVisita = $("#fechaVisita").val();
     let sesion = $("#sesion").val();
     let otroPrograma = $("#otroPrograma").val();
     let idCurso = $("#idCurso").val();
@@ -33,6 +33,8 @@ function registrar() {
     let sexo = $("#sexo").val();
     let idPoblacionEspecial = $("#idPoblacionEspecial").val();
     let idTipoUsuario = $("#idTipoUsuario").val();
+
+    let fechaVisita = new Date().toISOString().split('T')[0];
 
     // Crear objeto con los datos del formulario
     let data = {

@@ -1,1 +1,1 @@
-location.href = "./pages/login.html";
+location.href = "./pages/index.html";

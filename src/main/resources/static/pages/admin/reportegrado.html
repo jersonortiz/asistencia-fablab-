@@ -5,7 +5,7 @@
         <script src="../../dist/js/config.js"></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Fablab Asistencia a Cursos</title>
+        <title>Fablab Asistencia a Sustentacion de proyecto de grado</title>
 
         <!-- Google Font: Source Sans Pro -->
         <link rel="stylesheet"
@@ -16,11 +16,6 @@
         <link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
         <!-- Theme style -->
         <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
-
-          <!-- DataTables -->
-  <link rel="stylesheet" href="../../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="../../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-  <link rel="stylesheet" href="../../plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     </head>
@@ -40,7 +35,7 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <div class="container-fluid">
-                        <h2 class="text-center display-4">Asistencias a Cursos</h2>
+                        <h2 class="text-center display-4">Asistencias a sustentacion de proyecto de grado</h2>
                     </div>
                     <!-- /.container-fluid -->
                 </section>
@@ -49,58 +44,43 @@
                 <section class="content">
                     <div class="container-fluid">
                         
-                    <!-- Default box -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Asistencias a Cursos</h3>
 
-                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                
+                                <span> Asistencias a sustentacion de proyecto de grado en las instalaciones de FABLAB</span>
 
-                        <!-- /.card-header -->
-                        <div class="card-body table-responsive p-0" >
-                             
+                            </div>
+
+                            <div class="card-body table-responsive p-0" >
                                 <table id="example2" class="table table-bordered table-hover table-striped text-nowrap">
                                     <thead>
                                         <tr>
                                             <th>Fecha</th>
-                                            <th>Curso</th>
-                                            <th>Sesion</th>
                                             <th>Nombre Completo</th>
                                             <th>Genero</th>
-                                            <th>Estudia en Universidad</th>
-                                            <th>Institucio Colegio</th>
+                                      
                                             <th>Institucion Universidad</th>
                                             <th>Programa Academico</th>
                                             <th>A que población especial pertenece</th>
-
                                             
                                         </tr>
-
-                                          <tr>
+                                        <tr>
                                             <th><input type="text" id="filter-fecha" placeholder="Filtrar Fecha"></th>
-                                            <th><select id="filter-curso"><option value="">Todos</option></select></th>
-                                            <th><select id="filter-sesion"><option value="">Todos</option></select></th>
                                             <th><input type="text" id="filter-nombre" placeholder="Filtrar Nombre"></th>
                                             <th><select id="filter-genero"><option value="">Todos</option><option value="M">M</option><option value="F">F</option></select></th>
-                                            <th><select id="filter-estudia"><option value="">Todos</option><option value="si">Si</option><option value="no">No</option></select></th>
-                                            <th><select id="filter-colegio"><option value="">Todos</option></select></th>
+                                        
                                             <th><select id="filter-universidad"><option value="">Todos</option></select></th>
                                             <th><select id="filter-programa"><option value="">Todos</option></select></th>
                                             <th><select id="filter-poblacion"><option value="">Todos</option></select></th>
-                                            
+                                          
                                         </tr>
-                            
-
                                     </thead>
                                     <tbody id="colegiotable"></tbody>
                                 </table>
+                            </div>
 
-                        
                         </div>
-                        <!-- /.card-body -->
-                    </div>
-
-
 
                         <div class="row mt-3">
                             <div class="col-md-10 offset-md-1">
@@ -125,22 +105,6 @@
 <script src="../../plugins/select2/js/select2.full.min.js"></script>
 <!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
-
-<!-- DataTables  & Plugins -->
-<script src="../../plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="../../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-<script src="../../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-<script src="../../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-<script src="../../plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-<script src="../../plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-<script src="../../plugins/jszip/jszip.min.js"></script>
-<script src="../../plugins/pdfmake/pdfmake.min.js"></script>
-<script src="../../plugins/pdfmake/vfs_fonts.js"></script>
-<script src="../../plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-<script src="../../plugins/datatables-buttons/js/buttons.print.min.js"></script>
-<script src="../../plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-
-
        <script>
         $(function() {
             $("#header").load("../templates/header.html");
@@ -148,18 +112,14 @@
             $("#footer").load("../templates/footer.html");
         });
     </script>
-
-<script>
- 
-</script>
-
+<!-- AdminLTE App -->
 
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
 <script src="../../dist/js/session.js"></script>
 
-<script src="../../dist/js/reporte/reportecurso.js"></script>
+<script src="../../dist/js/reporte/reportesustentaciongrado.js"></script>
 
 
 

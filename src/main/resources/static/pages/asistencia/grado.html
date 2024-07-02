@@ -21,7 +21,7 @@
     <!-- Navbar -->
     <nav class="main-header navbar navbar-expand-md navbar-light navbar-white">
         <div class="container">
-            <a href="#" class="navbar-brand">
+            <a href="../index.html" class="navbar-brand">
                 <span class="brand-text font-weight-light">Registro de Asistencia Sustentacion de Proyecto de Grado</span>
             </a>
         </div>
@@ -33,7 +33,7 @@
         <!-- Main content -->
         <div class="content">
             <div class="container container-custom">
-                <h1 class="text-center">Registro de Asistencia a Curso</h1>
+                <h1 class="text-center">Registro de Asistencia a Sustentacion de proyecto de grado</h1>
                 <form id="registroForm">
                     <div id="parte1">
                         <h3>Datos de la Persona</h3>
@@ -92,26 +92,26 @@
                         <h3>Datos </h3>
                        <div class="form-group">
                            
-                            <div class="form-group">
-                                <label for="fechaVisita">Fecha de Visita</label>
-                                <input type="text" class="form-control" id="fechaVisita" name="fechaVisita" required>
-                            </div>
-                          
-                            <div class="form-group">
-                                <label for="otroPrograma">Otro Programa</label>
-                                <input type="text" class="form-control" id="otroPrograma" name="otroPrograma">
-                            </div>
-                         
+
+                           
+                           
+                       
                           
                             <div class="form-group">
                                 <label for="idProgramaAcademico">ID de Programa Académico</label>
-                                <select class="form-control" id="idProgramaAcademico" name="idProgramaAcademico" required>
+                                <select class="form-control" id="idProgramaAcademico" name="idProgramaAcademico" onchange="mostrarCampoOtroPrograma(this.value)" required>
                                     <!-- Opciones de ID de Programa Académico -->
                                     <option value="1">Programa Académico 1</option>
                                     <option value="2">Programa Académico 2</option>
                                     <!-- Agregar más opciones según sea necesario -->
                                 </select>
                             </div>
+
+<div class="form-group" id="campoOtroPrograma" style="display: none;">
+                                <label for="otroPrograma">Otro Programa</label>
+                                <input type="text" class="form-control" id="otroPrograma" name="otroPrograma">
+                            </div>
+                            
                             <div class="form-group">
                                 <label for="idUniversidad">ID de Universidad</label>
                                 <select class="form-control" id="idUniversidad" name="idUniversidad" required>
