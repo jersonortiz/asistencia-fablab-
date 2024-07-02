@@ -2,20 +2,20 @@ $(document).ready(function () {
     $("#registroForm").submit(function (e) {
         e.preventDefault();
 
-        registrar()
+        registrar();
     });
 
     cargarpoblacion();
     cargartipo();
-    cargarcolegio()
+    cargarcolegio();
 
 });
 
 function registrar() {
     let loadurl = url + 'socializacioncolegio';
 
-  // Obtener los valores de los campos del formulario
-   
+    // Obtener los valores de los campos del formulario
+
     //let fecha = $("#fechaVisita").val();
     let idColegio = $("#idColegio").val();
     let nombre = $("#nombre").val();
@@ -28,11 +28,11 @@ function registrar() {
     let idPoblacionEspecial = $("#idPoblacionEspecial").val();
     let idTipoUsuario = $("#idTipoUsuario").val();
 
-      let fecha = new Date().toISOString().split('T')[0];
+    let fecha = new Date().toISOString().split('T')[0];
 
     // Crear objeto con los datos del formulario
     let data = {
-      
+
         fecha: fecha,
         idColegio: idColegio,
         nombre: nombre,

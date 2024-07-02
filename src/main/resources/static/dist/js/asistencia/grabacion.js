@@ -2,7 +2,7 @@ $(document).ready(function () {
     $("#registroForm").submit(function (e) {
         e.preventDefault();
 
-        registrar()
+        registrar();
     });
 
     cargarpoblacion();

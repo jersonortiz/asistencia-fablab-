@@ -11,12 +11,8 @@ $(function () {
         submitHandler: function () {
             console.log('test');
             registro();
-            let fecha =   $("#fecha").val();
+            let fecha = $("#fecha").val();
 
-
-  
-            
-         
         }
     });
     $('#registform').validate({
@@ -50,7 +46,7 @@ $(function () {
                 minlength: 4,
                 equalTo: "#contraseña"
             },
-            terms:{
+            terms: {
                 required: true,
             }
         },
@@ -83,11 +79,9 @@ $(function () {
                 minlength: "Contraseña minimo 4 caracteres",
                 equalTo: "debe de ser igual a contraseña"
             },
-            terms:{
+            terms: {
                 required: "Acepte los terminos y condiciones",
             },
-
-
 
         },
         errorElement: 'span',
@@ -106,114 +100,114 @@ $(function () {
 
 
 /*
-$(document).ready(function () {
-    $("#registform").submit(function (e) {
-        e.preventDefault();
-    });
+ $(document).ready(function () {
+ $("#registform").submit(function (e) {
+ e.preventDefault();
+ });
+ 
+ $("#agreeTerms").click(function () {
+ $("#registro").attr("disabled", !this.checked);
+ });
+ 
+ $("#registro").click(function () {
+ 
+ registro();
+ 
+ });
+ 
+ 
+ 
+ 
+ });
+ 
+ */
 
-    $("#agreeTerms").click(function () {
-        $("#registro").attr("disabled", !this.checked);
-    });
 
-    $("#registro").click(function () {
-
-        registro();
-
-    });
-
-
-
-
-});
-
-*/
-
-
-function registro(){
+function registro() {
     let nom = $("#nombre").val();
-        let apel = $("#apellido").val();
-        let correo = $("#correo").val();
-        let tel = $("#telefono").val();
-        let doc = $("#documento").val();
-        let pass = $("#contraseña").val();
-        //let confpass = $("#confcontraseña").val();
-    
-        let fecha =   $("#fecha").val();
+    let apel = $("#apellido").val();
+    let correo = $("#correo").val();
+    let tel = $("#telefono").val();
+    let doc = $("#documento").val();
+    let pass = $("#contraseña").val();
+    //let confpass = $("#confcontraseña").val();
 
-        let edd = calcularEdad(new Date(fecha));
-        
-        if(edd <18){
-            alert("debe de ser mayor de edad");
-            return;
-        }
+    let fecha = $("#fecha").val();
 
+    let edd = calcularEdad(new Date(fecha));
 
-        let loadurl = url + 'user/registro';
-        //let url = 'http://localhost:8080/user/registro';
-        let auth = {};
-        let data = {
-            id: '',
-            nombre: nom,
-            apellido: apel,
-            email: correo,
-            telefono: tel,
-            documento: doc,
-            contraseña: pass,
-            rol: 2,
-            fechaNacimiento: fecha,
-        };
-        console.log(data);
-
-        let init = {
-            method: 'POST',
-            headers: {
-                mode: 'cors',
-                'Accept': 'application/json',
-                'Content-type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            body: JSON.stringify(data),
-            cache: 'default'
-        };
+    if (edd < 18) {
+        alert("debe de ser mayor de edad");
+        return;
+    }
 
 
-        fetch(loadurl, init)
-                .then((resp) => resp.json())
-                .then(function (data) {
-                    if (data) {
+    let loadurl = url + 'user/registro';
+    //let url = 'http://localhost:8080/user/registro';
+    let auth = {};
+    let data = {
+        id: '',
+        nombre: nom,
+        apellido: apel,
+        email: correo,
+        telefono: tel,
+        documento: doc,
+        contraseña: pass,
+        rol: 2,
+        fechaNacimiento: fecha,
+    };
+    console.log(data);
 
-                        console.log(data);
+    let init = {
+        method: 'POST',
+        headers: {
+            mode: 'cors',
+            'Accept': 'application/json',
+            'Content-type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify(data),
+        cache: 'default'
+    };
 
-                        if (data.email == correo) {
-                            alert("registro exitoso");
 
-                            location.href = "./login.html";
-                        }
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                if (data) {
 
-                        if (data.msg == "usuario ya existe") {
-                            alert("ya hay un usuario con este correo");
-                        }
+                    console.log(data);
 
+                    if (data.email == correo) {
+                        alert("registro exitoso");
 
+                        location.href = "./login.html";
                     }
-                });
+
+                    if (data.msg == "usuario ya existe") {
+                        alert("ya hay un usuario con este correo");
+                    }
+
+
+                }
+            });
 
 }
 
 function calcularEdad(fechaNacimiento) {
-  var fechaActual = new Date();
-  var edad = fechaActual.getFullYear() - fechaNacimiento.getFullYear();
-  
-  // Verificar si aún no ha pasado el cumpleaños de este año
-  var mesActual = fechaActual.getMonth();
-  var diaActual = fechaActual.getDate();
-  var mesNacimiento = fechaNacimiento.getMonth();
-  var diaNacimiento = fechaNacimiento.getDate();
-  
-  if (mesActual < mesNacimiento || (mesActual === mesNacimiento && diaActual < diaNacimiento)) {
-    edad--;
-  }
-  
-  return edad;
+    var fechaActual = new Date();
+    var edad = fechaActual.getFullYear() - fechaNacimiento.getFullYear();
+
+    // Verificar si aún no ha pasado el cumpleaños de este año
+    var mesActual = fechaActual.getMonth();
+    var diaActual = fechaActual.getDate();
+    var mesNacimiento = fechaNacimiento.getMonth();
+    var diaNacimiento = fechaNacimiento.getDate();
+
+    if (mesActual < mesNacimiento || (mesActual === mesNacimiento && diaActual < diaNacimiento)) {
+        edad--;
+    }
+
+    return edad;
 }
 

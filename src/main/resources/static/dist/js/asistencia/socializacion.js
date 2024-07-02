@@ -3,7 +3,7 @@ $(document).ready(function () {
     $("#registroForm").submit(function (e) {
         e.preventDefault();
 
-        registrar()
+        registrar();
     });
 
     cargarpoblacion();
@@ -14,26 +14,26 @@ $(document).ready(function () {
 });
 
 function mostrarCampoOtroPrograma(opcionSeleccionada) {
-        const campoOtroPrograma = document.getElementById('campoOtroPrograma');
-        if (opcionSeleccionada === 'otro') {
-            campoOtroPrograma.style.display = 'block';
-        } else {
-            campoOtroPrograma.style.display = 'none';
-            document.getElementById('otroPrograma').value = '';
-        }
+    const campoOtroPrograma = document.getElementById('campoOtroPrograma');
+    if (opcionSeleccionada === 'otro') {
+        campoOtroPrograma.style.display = 'block';
+    } else {
+        campoOtroPrograma.style.display = 'none';
+        document.getElementById('otroPrograma').value = '';
     }
+}
 
 function registrar() {
     let loadurl = url + 'socializacion';
 
-  // Obtener los valores de los campos del formulario
-   
+    // Obtener los valores de los campos del formulario
+
     //let fecha = $("#fechaVisita").val();
     let otroPrograma = $("#otroPrograma").val();
     //let idPersona = $("#idPersona").val();
     let idProgramaAcademico = $("#idProgramaAcademico").val();
     let idUniversidad = $("#idUniversidad").val();
-   
+
     let nombre = $("#nombre").val();
     let apellido = $("#apellido").val();
     let documento = $("#documento").val();
@@ -44,7 +44,7 @@ function registrar() {
     let idPoblacionEspecial = $("#idPoblacionEspecial").val();
     let idTipoUsuario = $("#idTipoUsuario").val();
 
-      let fecha = new Date().toISOString().split('T')[0];
+    let fecha = new Date().toISOString().split('T')[0];
 
 
     if (idProgramaAcademico === 'otro') {
@@ -52,7 +52,7 @@ function registrar() {
     }
     // Crear objeto con los datos del formulario
     let data = {
-      
+
         fecha: fecha,
         otroPrograma: otroPrograma,
         idProgramaAcademico: idProgramaAcademico,

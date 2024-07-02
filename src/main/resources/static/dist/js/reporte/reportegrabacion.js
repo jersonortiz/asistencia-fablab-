@@ -37,7 +37,7 @@ function loadstart() {
 
 
 
-    let loadurl = url + 'ingreso';
+    let loadurl = url + 'grabacion/reporte';
     let init = makeinitnodat();
 
 
@@ -55,22 +55,32 @@ function loadstart() {
                 let fill = ''
                 $.each(data, function (i, item) {
 
-                    entradasalida = 'salida'
-                    if (item.entradaSalida) {
-                        entradasalida = 'entrada'
+
+                    Programaacademico = item.otroPrograma;
+                    if (item.idProgramaAcademico) {
+                        Programaacademico = item.idProgramaAcademico.nombre;
                     }
 
+                    semillero = "";
+                    if (item.idSemillero) {
+                        semillero = item.idSemillero.nombre;
+
+                    }
+
+                    externo = '';
+                    if (item.externo) {
+                        externo = item.externo;
+                    }
+
+
                     fill += '<tr>' +
-                            '<td>' + item.idPracticante.nombre + '</td>' +
-                            '<td>' + item.idPracticante.codigo + '</td>' +
-                            '<td>' + item.hora + '</td>' +
-                            '<td>' + item.fechaIngreso + '</td>' +
-                            '<td>' + entradasalida + '</td>' +
-                            '<td>' +
-                            '<button type="button" class="btn btn-danger" value="' + item.id + '" onclick="eliminar(this.value)" title="eliminar">' +
-                            '<i class="fas fa-trash"></i>' +
-                            '</button>' +
-                            '</td>' +
+                            '<td>' + item.idPersona.nombre + '</td>' +
+                            '<td>' + item.idPersona.codigo + '</td>' +
+                            '<td>' + item.fecha + '</td>' +
+                            '<td>' + semillero + '</td>' +
+                            '<td>' + externo + '</td>' +
+                            '<td>' + Programaacademico + '</td>' +
+                            '<td>' + item.idUniversidad.nombre + '</td>' +
                             '</tr>';
 
 

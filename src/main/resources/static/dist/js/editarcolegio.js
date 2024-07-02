@@ -39,7 +39,7 @@ function cargar() {
             .then(function (data) {
                 colegio = data;
                 console.log(data);
-                
+
                 $("#nombre").val(data.nombre);
                 $("#direccion").val(data.direccion);
                 $("#telefono").val(data.telContacto);
@@ -52,7 +52,7 @@ function guardar() {
 
     let idu = getId();
 
-    let loadurl = url + 'colegio/'+ idu;
+    let loadurl = url + 'colegio/' + idu;
 
     let nom = $("#nombre").val();
     let dir = $("#direccion").val();
@@ -60,8 +60,8 @@ function guardar() {
 
 
     let data = {
-      
-    	nombre: nom,
+
+        nombre: nom,
         direccion: dir,
         telContacto: tel,
     };

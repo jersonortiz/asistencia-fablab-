@@ -2,21 +2,21 @@ $(document).ready(function () {
     $("#registroForm").submit(function (e) {
         e.preventDefault();
 
-        registrar()
+        registrar();
     });
 
     cargarpoblacion();
     cargartipo();
     cargarcurso();
-    cargarcolegio()
+    cargarcolegio();
 
 });
 
 function registrar() {
     let loadurl = url + 'cursocolegio';
 
-  // Obtener los valores de los campos del formulario
-   
+    // Obtener los valores de los campos del formulario
+
     //let fechaVisita = $("#fechaVisita").val();
     let sesion = $("#sesion").val();
     let otroPrograma = $("#otroPrograma").val();
@@ -38,7 +38,7 @@ function registrar() {
 
     // Crear objeto con los datos del formulario
     let data = {
-      
+
         fechaVisita: fechaVisita,
         sesion: sesion,
         otroPrograma: otroPrograma,

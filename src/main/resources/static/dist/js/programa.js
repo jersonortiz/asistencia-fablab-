@@ -16,7 +16,7 @@ function editar(value) {
 }
 
 function eliminar(value) {
-    let loadurl = url + 'programa/'+value;
+    let loadurl = url + 'programa/' + value;
 
     let data = {
         'id': value
@@ -39,7 +39,7 @@ function eliminar(value) {
 
 function loadstart() {
 
-  
+
 
     let loadurl = url + 'programa';
     let init = makeinitnodat();

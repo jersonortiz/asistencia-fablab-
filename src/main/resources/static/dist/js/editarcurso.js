@@ -51,18 +51,18 @@ function cargarTipo() {
 
 function guardar() {
 
-     let idu = getTipoId();
+    let idu = getTipoId();
 
-    let loadurl = url + 'curso/'+idu;
+    let loadurl = url + 'curso/' + idu;
 
     let nombre = $("#nombre").val();
 
     let data = {
-      
+
         nombre: nombre,
     };
 
-    
+
 
     console.log(data);
     let init = makeinit(data)

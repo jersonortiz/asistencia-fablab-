@@ -54,7 +54,7 @@ function guardar() {
 
     let idu = getTipoId();
 
-    let loadurl = url + 'semillero/'+idu;
+    let loadurl = url + 'semillero/' + idu;
 
     let nombre = $("#nombre").val();
     let des = $("#sigla").val();
@@ -63,7 +63,7 @@ function guardar() {
         nombre: nombre,
         sigla: des,
     };
-    
+
 
     console.log(data);
     let init = makeinit(data)

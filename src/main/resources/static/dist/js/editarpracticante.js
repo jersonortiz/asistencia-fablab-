@@ -9,7 +9,7 @@ $(document).ready(function () {
         guardar();
     });
 
-    
+
     cargarpersonas();
     cargar();
 
@@ -41,7 +41,7 @@ function cargar() {
             .then(function (data) {
                 colegio = data;
                 console.log(data);
-                
+
                 $("#idCarnet").val(data.idCarnet);
                 $("#semestre").val(data.semestre);
                 console.log(data.estado);
@@ -57,9 +57,9 @@ function guardar() {
 
     let idu = getId();
 
-    let loadurl = url + 'practicante/'+ idu;
+    let loadurl = url + 'practicante/' + idu;
 
- 
+
     let car = $("#idCarnet").val();
     let sem = $("#semestre").val();
     let est = $("#estado").val();
@@ -70,7 +70,7 @@ function guardar() {
         semestre: sem,
         estado: est,
         idPersona: {id: per}
-  
+
     };
 
 
@@ -95,33 +95,33 @@ function guardar() {
 
 }
 
-function cargarpersonas(){
+function cargarpersonas() {
 
     $('#idPersona').empty();
 
-       let loadurl = url + 'persona';
+    let loadurl = url + 'persona';
 
-                let init = makeinitnodat();
+    let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                //curso = data;
 
-                           console.log(data);
+                console.log(data);
 
-                            let fill = ''
+                let fill = ''
 
-                            $.each(data, function (i, item) {
-                                fill += '<option value="'+ item.id +'">'+
-                                item.nombre + ' ' + item.apellido+' '+ 
-                                item.codigo +'</option>';
-                            });
+                $.each(data, function (i, item) {
+                    fill += '<option value="' + item.id + '">' +
+                            item.nombre + ' ' + item.apellido + ' ' +
+                            item.codigo + '</option>';
+                });
 
-                             $('#idPersona').append(fill);
+                $('#idPersona').append(fill);
 
-                        });         
- }
+            });
+}
 
 
 

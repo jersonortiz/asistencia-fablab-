@@ -1,20 +1,20 @@
 let url = serverurl;
- persona= null;
+persona = null;
 
 $(document).ready(function () {
     $("#registroForm").submit(function (e) {
         e.preventDefault();
 
-        registrar()
+        registrar();
     });
 
     cargarpoblacion();
     cargarcurso();
     cargarcolegio();
 
-      let fechaActual = new Date();
+    let fechaActual = new Date();
     let año = fechaActual.getFullYear();
-    let mes = 2
+    let mes = 2;
     let semestre = mes < 7 ? `${año}-1` : `${año}-2`;
 
     console.log(semestre);
@@ -23,8 +23,8 @@ $(document).ready(function () {
 });
 
 function registrar() {
-   
-   let loadurl = url + 'steam';
+
+    let loadurl = url + 'steam';
 
     // Obtener los valores de los campos del formulario
     let fecha = new Date().toISOString().split('T')[0]; // Capturar la fecha actual en formato YYYY-MM-DD
@@ -36,7 +36,7 @@ function registrar() {
     let idPoblacionEspecial = document.getElementById('idPoblacionEspecial').value;
 
 
-   let fechaActual = new Date();
+    let fechaActual = new Date();
     let año = fechaActual.getFullYear();
     let mes = fechaActual.getMonth() + 1; // Los meses en JavaScript son de 0 a 11, por eso sumamos 1.
     let semestre = mes < 7 ? `${año}-1` : `${año}-2`;
@@ -55,7 +55,7 @@ function registrar() {
 
     console.log(data);
 
-    let init = makeinit(data)
+    let init = makeinit(data);
 
     fetch(loadurl, init)
             .then((resp) => resp.json())
@@ -76,96 +76,96 @@ function registrar() {
 
 
 
-function cargarpoblacion(){
+function cargarpoblacion() {
 
     $('#idPoblacionEspecial').empty();
 
-       let loadurl = url + 'poblacion';
+    let loadurl = url + 'poblacion';
 
-                let init = makeinitnodat();
+    let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                //curso = data;
 
-                           console.log(data);
+                console.log(data);
 
-                            let fill = ''
+                let fill = '';
 
-                            $.each(data, function (i, item) {
-                                 fill += '<option value="'+ item.id +'">'+ item.nombre+'</option>';
+                $.each(data, function (i, item) {
+                    fill += '<option value="' + item.id + '">' + item.nombre + '</option>';
 
-                            });
+                });
 
-                             $('#idPoblacionEspecial').append(fill);
-
-
+                $('#idPoblacionEspecial').append(fill);
 
 
 
-                        });
 
-               
- }
 
- function cargarcurso(){
+            });
+
+
+}
+
+function cargarcurso() {
 
     $('#idCurso').empty();
 
-       let loadurl = url + 'curso';
+    let loadurl = url + 'curso';
 
-                let init = makeinitnodat();
+    let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                //curso = data;
 
-                           console.log(data);
+                console.log(data);
 
-                            let fill = ''
+                let fill = '';
 
-                            $.each(data, function (i, item) {
-                                 fill += '<option value="'+ item.id +'">'+ item.nombre+'</option>';
+                $.each(data, function (i, item) {
+                    fill += '<option value="' + item.id + '">' + item.nombre + '</option>';
 
-                            });
+                });
 
-                            $('#idCurso').append(fill);
-
-
-
-                        });
- }
+                $('#idCurso').append(fill);
 
 
-function cargarcolegio(){
+
+            });
+}
+
+
+function cargarcolegio() {
 
     $('#idColegio').empty();
 
-       let loadurl = url + 'colegio';
+    let loadurl = url + 'colegio';
 
-                let init = makeinitnodat();
+    let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                //curso = data;
 
-                           console.log(data);
+                console.log(data);
 
-                            let fill = ''
+                let fill = '';
 
-                            $.each(data, function (i, item) {
-                                 fill += '<option value="'+ item.id +'">'+ item.nombre+'</option>';
+                $.each(data, function (i, item) {
+                    fill += '<option value="' + item.id + '">' + item.nombre + '</option>';
 
-                            });
+                });
 
-                            $('#idColegio').append(fill);
+                $('#idColegio').append(fill);
 
 
 
-                        });
+            });
 }
 
 

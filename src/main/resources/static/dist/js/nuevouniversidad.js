@@ -22,7 +22,7 @@ function registrar() {
         nombre: nom,
         direccion: dir,
         telContacto: tel,
-  
+
     };
 
     console.log(data);

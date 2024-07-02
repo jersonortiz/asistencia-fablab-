@@ -10,9 +10,9 @@ $(document).ready(function () {
     cargaraula();
     cargaruniversidad();
     cargarprograma();
-      
 
- 
+
+
 
 });
 
@@ -21,7 +21,7 @@ $(document).ready(function () {
 function registrar() {
     let loadurl = url + 'clase';
 
-      // Obtener los valores de los campos del formulario
+    // Obtener los valores de los campos del formulario
     let nombre = $("#nombre").val();
     let apellido = $("#apellido").val();
     let documento = $("#documento").val();

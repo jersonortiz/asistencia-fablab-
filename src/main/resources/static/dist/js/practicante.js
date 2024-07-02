@@ -16,7 +16,7 @@ function editar(value) {
 }
 
 function eliminar(value) {
-    let loadurl = url + 'practicante/'+value;
+    let loadurl = url + 'practicante/' + value;
 
     let data = {
         'id': value
@@ -40,7 +40,7 @@ function eliminar(value) {
 
 function loadstart() {
 
- 
+
     let loadurl = url + 'practicante';
     let init = makeinitnodat();
 
@@ -61,7 +61,7 @@ function loadstart() {
 
                     estado = 'activo'
 
-                    if(!item.estado){
+                    if (!item.estado) {
                         estado = 'inactivo'
 
                     }
@@ -70,7 +70,7 @@ function loadstart() {
                             '<td>' + item.idPersona.nombre + '</td>' +
                             '<td>' + item.idPersona.codigo + '</td>' +
                             '<td>' + item.idPersona.telefono + '</td>' +
-                            '<td>' + estado+ '</td>' +
+                            '<td>' + estado + '</td>' +
                             '<td>' +
                             '<button type="button" class="btn btn-info" value="' + item.id + '" onclick="editar(this.value)" title="editar publicacion">' +
                             '<i class="fas fa-pen"></i>' +

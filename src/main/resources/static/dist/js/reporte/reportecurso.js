@@ -16,7 +16,7 @@ function editar(value) {
 }
 
 function eliminar(value) {
-    let loadurl = url + 'colegio/'+value;
+    let loadurl = url + 'colegio/' + value;
 
     let data = {
         'id': value
@@ -43,23 +43,23 @@ function loadstart() {
     $('#colegiotable').empty();
 
     fetch(loadurl, init)
-        .then((resp) => resp.json())
-        .then(function (data) {
-            console.log(data);
-            if (data.msg) {
+            .then((resp) => resp.json())
+            .then(function (data) {
                 console.log(data);
-                return;
-            }
+                if (data.msg) {
+                    console.log(data);
+                    return;
+                }
 
-            // Generar opciones de dropdowns
-            populateDropdowns(data);
+                // Generar opciones de dropdowns
+                populateDropdowns(data);
 
-            // Renderizar la tabla
-            renderTable(data);
+                // Renderizar la tabla
+                renderTable(data);
 
-            // Adjuntar eventos de filtrado
-            attachFilterEvents(data);
-        });
+                // Adjuntar eventos de filtrado
+                attachFilterEvents(data);
+            });
 }
 
 function populateDropdowns(data) {
@@ -73,8 +73,10 @@ function populateDropdowns(data) {
     data.forEach(item => {
         cursos.add(item.idCurso.nombre);
         sesiones.add(item.sesion);
-        if (item.idColegio) colegios.add(item.idColegio.nombre);
-        if (item.idUniversidad) universidades.add(item.idUniversidad.nombre);
+        if (item.idColegio)
+            colegios.add(item.idColegio.nombre);
+        if (item.idUniversidad)
+            universidades.add(item.idUniversidad.nombre);
         if (item.idProgramaAcademico) {
             programas.add(item.idProgramaAcademico.nombre);
         } else if (item.otroPrograma) {
@@ -142,17 +144,17 @@ function renderTable(data) {
         }
 
         fill += '<tr>' +
-            '<td>' + item.fechaVisita + '</td>' +
-            '<td>' + item.idCurso.nombre + '</td>' +
-            '<td>' + sesion + '</td>' +
-            '<td>' + item.idPersona.nombre + '</td>' +
-            '<td>' + item.idPersona.sexo + '</td>' +
-            '<td>' + estudiauniversidad + '</td>' +
-            '<td>' + InstitucionColegio + '</td>' +
-            '<td>' + InstitucionUniversidad + '</td>' +
-            '<td>' + Programaacademico + '</td>' +
-            '<td>' + poblacion + '</td>' +
-            '</tr>';
+                '<td>' + item.fechaVisita + '</td>' +
+                '<td>' + item.idCurso.nombre + '</td>' +
+                '<td>' + sesion + '</td>' +
+                '<td>' + item.idPersona.nombre + '</td>' +
+                '<td>' + item.idPersona.sexo + '</td>' +
+                '<td>' + estudiauniversidad + '</td>' +
+                '<td>' + InstitucionColegio + '</td>' +
+                '<td>' + InstitucionUniversidad + '</td>' +
+                '<td>' + Programaacademico + '</td>' +
+                '<td>' + poblacion + '</td>' +
+                '</tr>';
     });
     $('#colegiotable').append(fill);
 
@@ -230,23 +232,43 @@ function renderTable(data) {
             }
         ],
         "initComplete": function () {
-                // Move the tfoot to be just after the thead
-                $('#example2 tfoot').insertAfter('#example2 thead');
-            }
+            // Move the tfoot to be just after the thead
+            $('#example2 tfoot').insertAfter('#example2 thead');
+        }
     }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
-    }
+}
 
 function attachFilterEvents(data) {
-    $('#filter-fecha').on('input', function() { applyFilters(data); });
-    $('#filter-curso').on('change', function() { applyFilters(data); });
-    $('#filter-sesion').on('change', function() { applyFilters(data); });
-    $('#filter-nombre').on('input', function() { applyFilters(data); });
-    $('#filter-genero').on('change', function() { applyFilters(data); });
-    $('#filter-estudia').on('change', function() { applyFilters(data); });
-    $('#filter-colegio').on('change', function() { applyFilters(data); });
-    $('#filter-universidad').on('change', function() { applyFilters(data); });
-    $('#filter-programa').on('change', function() { applyFilters(data); });
-    $('#filter-poblacion').on('change', function() { applyFilters(data); });
+    $('#filter-fecha').on('input', function () {
+        applyFilters(data);
+    });
+    $('#filter-curso').on('change', function () {
+        applyFilters(data);
+    });
+    $('#filter-sesion').on('change', function () {
+        applyFilters(data);
+    });
+    $('#filter-nombre').on('input', function () {
+        applyFilters(data);
+    });
+    $('#filter-genero').on('change', function () {
+        applyFilters(data);
+    });
+    $('#filter-estudia').on('change', function () {
+        applyFilters(data);
+    });
+    $('#filter-colegio').on('change', function () {
+        applyFilters(data);
+    });
+    $('#filter-universidad').on('change', function () {
+        applyFilters(data);
+    });
+    $('#filter-programa').on('change', function () {
+        applyFilters(data);
+    });
+    $('#filter-poblacion').on('change', function () {
+        applyFilters(data);
+    });
 }
 
 function applyFilters(data) {
@@ -266,27 +288,27 @@ function applyFilters(data) {
     const filteredData = data.filter(item => {
         const sesionStr = item.sesion ? String(item.sesion).toLowerCase() : '';
         return (!filters.fecha || (item.fechaVisita && item.fechaVisita.toLowerCase().includes(filters.fecha))) &&
-               (!filters.curso || (item.idCurso.nombre && item.idCurso.nombre.toLowerCase().includes(filters.curso))) &&
-               (!filters.sesion || sesionStr.includes(filters.sesion)) &&
-               (!filters.nombre || (item.idPersona.nombre && item.idPersona.nombre.toLowerCase().includes(filters.nombre))) &&
-               (!filters.genero || (item.idPersona.sexo && item.idPersona.sexo.toLowerCase().includes(filters.genero))) &&
-               (!filters.estudia || (item.tipoConsulta === 'curso' ? 'si' : 'no').includes(filters.estudia)) &&
-               (!filters.colegio || (item.idColegio && item.idColegio.nombre && item.idColegio.nombre.toLowerCase().includes(filters.colegio))) &&
-               (!filters.universidad || (item.idUniversidad && item.idUniversidad.nombre && item.idUniversidad.nombre.toLowerCase().includes(filters.universidad))) &&
-               (!filters.programa || (item.idProgramaAcademico && item.idProgramaAcademico.nombre && item.idProgramaAcademico.nombre.toLowerCase().includes(filters.programa)) || (item.otroPrograma && item.otroPrograma.toLowerCase().includes(filters.programa))) &&
-               (!filters.poblacion || (item.idPersona.idPoblacionEspecial && item.idPersona.idPoblacionEspecial.nombre && item.idPersona.idPoblacionEspecial.nombre.toLowerCase().includes(filters.poblacion)));
+                (!filters.curso || (item.idCurso.nombre && item.idCurso.nombre.toLowerCase().includes(filters.curso))) &&
+                (!filters.sesion || sesionStr.includes(filters.sesion)) &&
+                (!filters.nombre || (item.idPersona.nombre && item.idPersona.nombre.toLowerCase().includes(filters.nombre))) &&
+                (!filters.genero || (item.idPersona.sexo && item.idPersona.sexo.toLowerCase().includes(filters.genero))) &&
+                (!filters.estudia || (item.tipoConsulta === 'curso' ? 'si' : 'no').includes(filters.estudia)) &&
+                (!filters.colegio || (item.idColegio && item.idColegio.nombre && item.idColegio.nombre.toLowerCase().includes(filters.colegio))) &&
+                (!filters.universidad || (item.idUniversidad && item.idUniversidad.nombre && item.idUniversidad.nombre.toLowerCase().includes(filters.universidad))) &&
+                (!filters.programa || (item.idProgramaAcademico && item.idProgramaAcademico.nombre && item.idProgramaAcademico.nombre.toLowerCase().includes(filters.programa)) || (item.otroPrograma && item.otroPrograma.toLowerCase().includes(filters.programa))) &&
+                (!filters.poblacion || (item.idPersona.idPoblacionEspecial && item.idPersona.idPoblacionEspecial.nombre && item.idPersona.idPoblacionEspecial.nombre.toLowerCase().includes(filters.poblacion)));
     });
 
     $('#colegiotable').empty();
     renderTable(filteredData);
 }
 
-$(function() {
-        $("#filter-fecha").datepicker({
-            dateFormat: "yy-mm-dd"
-        });
+$(function () {
+    $("#filter-fecha").datepicker({
+        dateFormat: "yy-mm-dd"
+    });
 
-       });
+});
 
 
 

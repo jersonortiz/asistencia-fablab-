@@ -53,16 +53,16 @@ function guardar() {
 
     let idu = getTipoId();
 
-    let loadurl = url + 'poblacion/'+idu;
+    let loadurl = url + 'poblacion/' + idu;
 
     let nombre = $("#nombre").val();
 
     let data = {
-      
+
         nombre: nombre,
     };
 
-    
+
 
     console.log(data);
     let init = makeinit(data)

@@ -16,7 +16,7 @@ function editar(value) {
 }
 
 function eliminar(value) {
-    let loadurl = url + 'colegio/'+value;
+    let loadurl = url + 'colegio/' + value;
 
     let data = {
         'id': value
@@ -40,7 +40,7 @@ function eliminar(value) {
 
 function loadstart() {
 
- 
+
     let loadurl = url + 'colegio';
     let init = makeinitnodat();
 

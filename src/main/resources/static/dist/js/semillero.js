@@ -16,7 +16,7 @@ function editar(value) {
 }
 
 function eliminar(value) {
-    let loadurl = url + 'semillero/'+value;
+    let loadurl = url + 'semillero/' + value;
 
     let data = {
         'id': value
@@ -39,7 +39,7 @@ function eliminar(value) {
 
 function loadstart() {
 
-  
+
 
     let loadurl = url + 'semillero';
     let init = makeinitnodat();

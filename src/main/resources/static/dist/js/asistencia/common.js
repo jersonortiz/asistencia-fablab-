@@ -1,58 +1,58 @@
 let url = serverurl;
- persona= null;
+persona = null;
 
 
-    function mostrarCampoExtra(opcionSeleccionada) {
-        // Limpiar campos extras al inicio
-        document.getElementById('idSemillero').value = '';
-        document.getElementById('externo').value = '';
+function mostrarCampoExtra(opcionSeleccionada) {
+    // Limpiar campos extras al inicio
+    document.getElementById('idSemillero').value = '';
+    document.getElementById('externo').value = '';
 
-        // Ocultar todos los campos extra al inicio
-        document.getElementById('campoSemillero').style.display = 'none';
-        document.getElementById('campoExterno').style.display = 'none';
+    // Ocultar todos los campos extra al inicio
+    document.getElementById('campoSemillero').style.display = 'none';
+    document.getElementById('campoExterno').style.display = 'none';
 
-        // Mostrar el campo extra correspondiente según la opción seleccionada
-        if (opcionSeleccionada === 'semillero') {
-            document.getElementById('campoSemillero').style.display = 'block';
-        } else if (opcionSeleccionada === 'externo') {
-            document.getElementById('campoExterno').style.display = 'block';
-        }
+    // Mostrar el campo extra correspondiente según la opción seleccionada
+    if (opcionSeleccionada === 'semillero') {
+        document.getElementById('campoSemillero').style.display = 'block';
+    } else if (opcionSeleccionada === 'externo') {
+        document.getElementById('campoExterno').style.display = 'block';
     }
+}
 
 function mostrarCampoOtroPrograma(opcionSeleccionada) {
-        const campoOtroPrograma = document.getElementById('campoOtroPrograma');
-        if (opcionSeleccionada === 'otro') {
-            campoOtroPrograma.style.display = 'block';
-        } else {
-            campoOtroPrograma.style.display = 'none';
-            document.getElementById('otroPrograma').value = '';
-        }
+    const campoOtroPrograma = document.getElementById('campoOtroPrograma');
+    if (opcionSeleccionada === 'otro') {
+        campoOtroPrograma.style.display = 'block';
+    } else {
+        campoOtroPrograma.style.display = 'none';
+        document.getElementById('otroPrograma').value = '';
     }
+}
 
-$(function() {
-        $("#fechaNacimiento, #fecha , #fechaVisita").datepicker({
-            dateFormat: "yy-mm-dd"
-        });
+$(function () {
+    $("#fechaNacimiento, #fecha , #fechaVisita").datepicker({
+        dateFormat: "yy-mm-dd"
+    });
 
-        $("#documento").on("blur", function() {
-            var documento = $(this).val();
-            if (documento) {
+    $("#documento").on("blur", function () {
+        var documento = $(this).val();
+        if (documento) {
 
 
-                let loadurl = url + 'persona/doc/' + documento;
+            let loadurl = url + 'persona/doc/' + documento;
 
-                let init = makeinitnodat();
+            let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+            fetch(loadurl, init)
+                    .then((resp) => resp.json())
+                    .then(function (data) {
+                        //curso = data;
 
-                            console.log(data);
+                        console.log(data);
 
-                            if (data){
-                                if(!data.msg){
-                                    persona = data;
+                        if (data) {
+                            if (!data.msg) {
+                                persona = data;
 
                                 $("#nombre").val(data.nombre);
                                 $("#apellido").val(data.apellido);
@@ -71,253 +71,253 @@ $(function() {
                                 $("#telefono").val('');
                                 $("#codigo").val('');
                                 $("#fechaNacimiento").val('');
-                             
-                                
-                            }
+
 
                             }
 
-                        });
- 
-            }
-        });
+                        }
+
+                    });
+
+        }
     });
+});
 
-function cargarpoblacion(){
+function cargarpoblacion() {
 
     $('#idPoblacionEspecial').empty();
 
-       let loadurl = url + 'poblacion';
+    let loadurl = url + 'poblacion';
 
-                let init = makeinitnodat();
+    let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                //curso = data;
 
-                           console.log(data);
+                console.log(data);
 
-                            let fill = ''
+                let fill = ''
 
-                            $.each(data, function (i, item) {
-                                 fill += '<option value="'+ item.id +'">'+ item.nombre+'</option>';
+                $.each(data, function (i, item) {
+                    fill += '<option value="' + item.id + '">' + item.nombre + '</option>';
 
-                            });
+                });
 
-                             $('#idPoblacionEspecial').append(fill);
-
-
+                $('#idPoblacionEspecial').append(fill);
 
 
 
-                        });         
- }
 
- function cargartipo(){
+
+            });
+}
+
+function cargartipo() {
 
     $('#idTipoUsuario').empty();
 
-       let loadurl = url + 'tipo';
+    let loadurl = url + 'tipo';
 
-                let init = makeinitnodat();
+    let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                //curso = data;
 
-                           console.log(data);
+                console.log(data);
 
-                            let fill = ''
+                let fill = ''
 
-                            $.each(data, function (i, item) {
-                                 fill += '<option value="'+ item.id +'">'+ item.tipo+'</option>';
+                $.each(data, function (i, item) {
+                    fill += '<option value="' + item.id + '">' + item.tipo + '</option>';
 
-                            });
+                });
 
-                            $('#idTipoUsuario').append(fill);
+                $('#idTipoUsuario').append(fill);
 
 
-                            $("#idTipoUsuario").val(4);
+                $("#idTipoUsuario").val(4);
 
-                        });       
- }
+            });
+}
 
- function cargarcurso(){
+function cargarcurso() {
 
     $('#idCurso').empty();
 
-       let loadurl = url + 'curso';
+    let loadurl = url + 'curso';
 
-                let init = makeinitnodat();
+    let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                //curso = data;
 
-                           console.log(data);
+                console.log(data);
 
-                            let fill = ''
+                let fill = ''
 
-                            $.each(data, function (i, item) {
-                                 fill += '<option value="'+ item.id +'">'+ item.nombre+'</option>';
+                $.each(data, function (i, item) {
+                    fill += '<option value="' + item.id + '">' + item.nombre + '</option>';
 
-                            });
+                });
 
-                            $('#idCurso').append(fill);
+                $('#idCurso').append(fill);
 
 
 
-                        });
- }
+            });
+}
 
-function cargaruniversidad(){
+function cargaruniversidad() {
 
     $('#idUniversidad').empty();
 
-       let loadurl = url + 'universidad';
+    let loadurl = url + 'universidad';
 
-                let init = makeinitnodat();
+    let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                //curso = data;
 
-                           console.log(data);
+                console.log(data);
 
-                            let fill = ''
+                let fill = ''
 
-                            $.each(data, function (i, item) {
-                                 fill += '<option value="'+ item.id +'">'+ item.nombre+'</option>';
+                $.each(data, function (i, item) {
+                    fill += '<option value="' + item.id + '">' + item.nombre + '</option>';
 
-                            });
+                });
 
-                            $('#idUniversidad').append(fill);
+                $('#idUniversidad').append(fill);
 
 
 
-                        });
+            });
 }
 
-function cargarprograma(){
+function cargarprograma() {
 
     $('#idProgramaAcademico').empty();
 
-       let loadurl = url + 'programa';
+    let loadurl = url + 'programa';
 
-                let init = makeinitnodat();
+    let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                //curso = data;
 
-                           console.log(data);
+                console.log(data);
 
-                            let fill = ''
+                let fill = ''
 
-                            $.each(data, function (i, item) {
-                                 fill += '<option value="'+ item.id +'">'+ item.nombre+'</option>';
+                $.each(data, function (i, item) {
+                    fill += '<option value="' + item.id + '">' + item.nombre + '</option>';
 
-                            });
+                });
 
-                            fill += '<option value="otro">Otro</option>';
+                fill += '<option value="otro">Otro</option>';
 
-                            $('#idProgramaAcademico').append(fill);
+                $('#idProgramaAcademico').append(fill);
 
 
 
-                        });
+            });
 }
 
-function cargaraula(){
+function cargaraula() {
 
     $('#idAula').empty();
 
-       let loadurl = url + 'aula';
+    let loadurl = url + 'aula';
 
-                let init = makeinitnodat();
+    let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                //curso = data;
 
-                           console.log(data);
+                console.log(data);
 
-                            let fill = ''
+                let fill = ''
 
-                            $.each(data, function (i, item) {
-                                 fill += '<option value="'+ item.id +'">'+ item.nombre+'</option>';
+                $.each(data, function (i, item) {
+                    fill += '<option value="' + item.id + '">' + item.nombre + '</option>';
 
-                            });
+                });
 
-                            $('#idAula').append(fill);
+                $('#idAula').append(fill);
 
 
 
-                        });
+            });
 }
 
-function cargarcolegio(){
+function cargarcolegio() {
 
     $('#idColegio').empty();
 
-       let loadurl = url + 'colegio';
+    let loadurl = url + 'colegio';
 
-                let init = makeinitnodat();
+    let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                //curso = data;
 
-                           console.log(data);
+                console.log(data);
 
-                            let fill = ''
+                let fill = ''
 
-                            $.each(data, function (i, item) {
-                                 fill += '<option value="'+ item.id +'">'+ item.nombre+'</option>';
+                $.each(data, function (i, item) {
+                    fill += '<option value="' + item.id + '">' + item.nombre + '</option>';
 
-                            });
+                });
 
-                            $('#idColegio').append(fill);
+                $('#idColegio').append(fill);
 
 
 
-                        });
+            });
 }
 
- function cargarsemillero(){
+function cargarsemillero() {
 
     $('#idSemillero').empty();
 
-       let loadurl = url + 'semillero';
+    let loadurl = url + 'semillero';
 
-                let init = makeinitnodat();
+    let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                //curso = data;
 
-                           console.log(data);
+                console.log(data);
 
-                            let fill = ''
+                let fill = ''
 
-                            $.each(data, function (i, item) {
-                                 fill += '<option value="'+ item.id +'">'+ item.nombre+'</option>';
+                $.each(data, function (i, item) {
+                    fill += '<option value="' + item.id + '">' + item.nombre + '</option>';
 
-                            });
+                });
 
-                            $('#idSemillero').append(fill);
+                $('#idSemillero').append(fill);
 
 
 
-                        });
+            });
 }
 
 function mostrarParte1() {

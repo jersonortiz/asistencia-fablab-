@@ -16,7 +16,7 @@ function editar(value) {
 }
 
 function eliminar(value) {
-    let loadurl = url + 'colegio/'+value;
+    let loadurl = url + 'colegio/' + value;
 
     let data = {
         'id': value
@@ -43,23 +43,23 @@ function loadstart() {
     $('#colegiotable').empty();
 
     fetch(loadurl, init)
-        .then((resp) => resp.json())
-        .then(function (data) {
-            console.log(data);
-            if (data.msg) {
+            .then((resp) => resp.json())
+            .then(function (data) {
                 console.log(data);
-                return;
-            }
+                if (data.msg) {
+                    console.log(data);
+                    return;
+                }
 
-            // Generar opciones de dropdowns
-            populateDropdowns(data);
+                // Generar opciones de dropdowns
+                populateDropdowns(data);
 
-            // Renderizar la tabla
-            renderTable(data);
+                // Renderizar la tabla
+                renderTable(data);
 
-            // Adjuntar eventos de filtrado
-            attachFilterEvents(data);
-        });
+                // Adjuntar eventos de filtrado
+                attachFilterEvents(data);
+            });
 }
 
 function populateDropdowns(data) {
@@ -70,16 +70,19 @@ function populateDropdowns(data) {
     let siglas = new Set();
 
     data.forEach(item => {
-        if (item.idSemillero) semilleros.add(item.idSemillero.nombre);
-        if (item.idSemillero) siglas.add(item.idSemillero.sigla);
-        if (item.idColegio) colegios.add(item.idColegio.nombre);
-    
+        if (item.idSemillero)
+            semilleros.add(item.idSemillero.nombre);
+        if (item.idSemillero)
+            siglas.add(item.idSemillero.sigla);
+        if (item.idColegio)
+            colegios.add(item.idColegio.nombre);
+
         if (item.idPersona.idPoblacionEspecial) {
             poblaciones.add(item.idPersona.idPoblacionEspecial.nombre);
         }
     });
 
- 
+
     addOptionsToSelect('#filter-colegio', colegios);
     addOptionsToSelect('#filter-poblacion', poblaciones);
 }
@@ -96,7 +99,7 @@ function renderTable(data) {
     $.each(data, function (i, item) {
 
         console.log(data);
-  
+
         let InstitucionColegio = '';
         let poblacion = 'Ninguna';
 
@@ -105,24 +108,34 @@ function renderTable(data) {
         }
 
         InstitucionColegio = item.idColegio ? item.idColegio.nombre : '';
-   
+
         fill += '<tr>' +
-            '<td>' + item.fecha + '</td>' +
-            '<td>' + item.idPersona.nombre + '</td>' +
-            '<td>' + item.idPersona.sexo + '</td>' +
-            '<td>' + InstitucionColegio + '</td>' +
-            '<td>' + poblacion + '</td>' +
-            '</tr>';
+                '<td>' + item.fecha + '</td>' +
+                '<td>' + item.idPersona.nombre + '</td>' +
+                '<td>' + item.idPersona.sexo + '</td>' +
+                '<td>' + InstitucionColegio + '</td>' +
+                '<td>' + poblacion + '</td>' +
+                '</tr>';
     });
     $('#colegiotable').append(fill);
 }
 
 function attachFilterEvents(data) {
-    $('#filter-fecha').on('input', function() { applyFilters(data); });
-    $('#filter-nombre').on('input', function() { applyFilters(data); });
-    $('#filter-genero').on('change', function() { applyFilters(data); });
-    $('#filter-colegio').on('change', function() { applyFilters(data); });
-    $('#filter-poblacion').on('change', function() { applyFilters(data); });
+    $('#filter-fecha').on('input', function () {
+        applyFilters(data);
+    });
+    $('#filter-nombre').on('input', function () {
+        applyFilters(data);
+    });
+    $('#filter-genero').on('change', function () {
+        applyFilters(data);
+    });
+    $('#filter-colegio').on('change', function () {
+        applyFilters(data);
+    });
+    $('#filter-poblacion').on('change', function () {
+        applyFilters(data);
+    });
 }
 
 function applyFilters(data) {
@@ -139,15 +152,15 @@ function applyFilters(data) {
         const nombreStr = item.idPersona.nombre ? item.idPersona.nombre.toLowerCase() : '';
         const generoStr = item.idPersona.sexo ? item.idPersona.sexo.toLowerCase() : '';
         const colegioStr = item.idColegio && item.idColegio.nombre ? item.idColegio.nombre.toLowerCase() : '';
-       
+
         const poblacionStr = item.idPersona.idPoblacionEspecial && item.idPersona.idPoblacionEspecial.nombre ? item.idPersona.idPoblacionEspecial.nombre.toLowerCase() : '';
 
         return (!filters.fecha || fechaStr.includes(filters.fecha)) &&
-               (!filters.nombre || nombreStr.includes(filters.nombre)) &&
-               (!filters.genero || generoStr.includes(filters.genero)) &&
-              (!filters.colegio || colegioStr.includes(filters.colegio)) &&
-               (!filters.programa || programaStr.includes(filters.programa)) &&
-               (!filters.poblacion || poblacionStr.includes(filters.poblacion));
+                (!filters.nombre || nombreStr.includes(filters.nombre)) &&
+                (!filters.genero || generoStr.includes(filters.genero)) &&
+                (!filters.colegio || colegioStr.includes(filters.colegio)) &&
+                (!filters.programa || programaStr.includes(filters.programa)) &&
+                (!filters.poblacion || poblacionStr.includes(filters.poblacion));
     });
 
     $('#colegiotable').empty();
@@ -156,12 +169,12 @@ function applyFilters(data) {
 
 
 
-$(function() {
-        $("#filter-fecha").datepicker({
-            dateFormat: "yy-mm-dd"
-        });
+$(function () {
+    $("#filter-fecha").datepicker({
+        dateFormat: "yy-mm-dd"
+    });
 
-       });
+});
 
 
 

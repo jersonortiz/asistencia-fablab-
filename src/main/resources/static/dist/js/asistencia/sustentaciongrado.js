@@ -2,7 +2,7 @@ $(document).ready(function () {
     $("#registroForm").submit(function (e) {
         e.preventDefault();
 
-        registrar()
+        registrar();
     });
 
     cargarpoblacion();
@@ -16,13 +16,13 @@ $(document).ready(function () {
 function registrar() {
     let loadurl = url + 'grado';
 
-  // Obtener los valores de los campos del formulario
-   
+    // Obtener los valores de los campos del formulario
+
     //let fechaVisita = $("#fechaVisita").val();
-  
+
     let otroPrograma = $("#otroPrograma").val();
- 
-    
+
+
     let idProgramaAcademico = $("#idProgramaAcademico").val();
     let idUniversidad = $("#idUniversidad").val();
     let nombre = $("#nombre").val();
@@ -41,7 +41,7 @@ function registrar() {
     let data = {
         fecha: fechaVisita,
         otroPrograma: otroPrograma,
-       
+
         idProgramaAcademico: idProgramaAcademico,
         idUniversidad: idUniversidad,
         nombre: nombre,

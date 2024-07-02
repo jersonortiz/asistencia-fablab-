@@ -2,7 +2,7 @@ $(document).ready(function () {
     $("#registroForm").submit(function (e) {
         e.preventDefault();
 
-        registrar()
+        registrar();
     });
 
     cargarpoblacion();
@@ -16,10 +16,10 @@ $(document).ready(function () {
 function registrar() {
     let loadurl = url + 'visitasemillero';
 
-  // Obtener los valores de los campos del formulario
-   
+    // Obtener los valores de los campos del formulario
+
     //let fecha = $("#fechaVisita").val();
-   
+
     let otroPrograma = $("#otroPrograma").val();
     let idSemillero = $("#idSemillero").val();
     let idPersona = $("#idPersona").val();
@@ -39,9 +39,9 @@ function registrar() {
 
     // Crear objeto con los datos del formulario
     let data = {
-      
+
         fecha: fecha,
-       
+
         otroPrograma: otroPrograma,
         idSemillero: idSemillero,
         idPersona: idPersona,

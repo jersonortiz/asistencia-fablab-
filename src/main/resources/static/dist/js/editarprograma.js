@@ -54,7 +54,7 @@ function guardar() {
 
     let idu = getTipoId();
 
-    let loadurl = url + 'programa/'+idu;
+    let loadurl = url + 'programa/' + idu;
 
     let nombre = $("#nombre").val();
     let des = $("#descripcion").val();
@@ -63,7 +63,7 @@ function guardar() {
         nombre: nombre,
         descripcion: des,
     };
-    
+
 
     console.log(data);
     let init = makeinit(data)

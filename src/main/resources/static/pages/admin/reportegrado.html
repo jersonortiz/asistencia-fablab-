@@ -24,10 +24,10 @@
         <div class="wrapper">
 
 
-     <!-- Placeholder for Header -->
-        <div id="header"></div>
-        <!-- Placeholder for Sidebar -->
-        <div id="sidebar"></div>
+            <!-- Placeholder for Header -->
+            <div id="header"></div>
+            <!-- Placeholder for Sidebar -->
+            <div id="sidebar"></div>
 
 
             <!-- Content Wrapper. Contains page content -->
@@ -43,11 +43,11 @@
                 <!-- Main content -->
                 <section class="content">
                     <div class="container-fluid">
-                        
+
 
                         <div class="card">
                             <div class="card-header">
-                                
+
                                 <span> Asistencias a sustentacion de proyecto de grado en las instalaciones de FABLAB</span>
 
                             </div>
@@ -59,21 +59,21 @@
                                             <th>Fecha</th>
                                             <th>Nombre Completo</th>
                                             <th>Genero</th>
-                                      
+
                                             <th>Institucion Universidad</th>
                                             <th>Programa Academico</th>
                                             <th>A que población especial pertenece</th>
-                                            
+
                                         </tr>
                                         <tr>
                                             <th><input type="text" id="filter-fecha" placeholder="Filtrar Fecha"></th>
                                             <th><input type="text" id="filter-nombre" placeholder="Filtrar Nombre"></th>
                                             <th><select id="filter-genero"><option value="">Todos</option><option value="M">M</option><option value="F">F</option></select></th>
-                                        
+
                                             <th><select id="filter-universidad"><option value="">Todos</option></select></th>
                                             <th><select id="filter-programa"><option value="">Todos</option></select></th>
                                             <th><select id="filter-poblacion"><option value="">Todos</option></select></th>
-                                          
+
                                         </tr>
                                     </thead>
                                     <tbody id="colegiotable"></tbody>
@@ -84,51 +84,51 @@
 
                         <div class="row mt-3">
                             <div class="col-md-10 offset-md-1">
-                                
+
                             </div>
                         </div>
                     </div>
-            
+
                 </section>
             </div>
 
-   <!-- Placeholder for Footer -->
-        <div id="footer"></div>
-</div>
-<!-- ./wrapper -->
+            <!-- Placeholder for Footer -->
+            <div id="footer"></div>
+        </div>
+        <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="../../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Select2 -->
-<script src="../../plugins/select2/js/select2.full.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../../dist/js/adminlte.min.js"></script>
-       <script>
-        $(function() {
-            $("#header").load("../templates/header.html");
-            $("#sidebar").load("../templates/sidebar.html");
-            $("#footer").load("../templates/footer.html");
-        });
-    </script>
-<!-- AdminLTE App -->
-
-
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-
-<script src="../../dist/js/session.js"></script>
-
-<script src="../../dist/js/reporte/reportesustentaciongrado.js"></script>
+        <!-- jQuery -->
+        <script src="../../plugins/jquery/jquery.min.js"></script>
+        <!-- Bootstrap 4 -->
+        <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Select2 -->
+        <script src="../../plugins/select2/js/select2.full.min.js"></script>
+        <!-- AdminLTE App -->
+        <script src="../../dist/js/adminlte.min.js"></script>
+        <script>
+            $(function () {
+                $("#header").load("../templates/header.html");
+                $("#sidebar").load("../templates/sidebar.html");
+                $("#footer").load("../templates/footer.html");
+            });
+        </script>
+        <!-- AdminLTE App -->
 
 
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+        <script src="../../dist/js/session.js"></script>
+
+        <script src="../../dist/js/reporte/reportesustentaciongrado.js"></script>
 
 
-<script>
-                                                    $(function () {
-                                                        $('.select2').select2()
-                                                    });
-</script>
-</body>
+
+
+        <script>
+                   $(function () {
+                       $('.select2').select2()
+                   });
+        </script>
+    </body>
 
 </html>

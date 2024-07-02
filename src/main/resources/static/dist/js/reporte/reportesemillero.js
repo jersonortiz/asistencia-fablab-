@@ -16,7 +16,7 @@ function editar(value) {
 }
 
 function eliminar(value) {
-    let loadurl = url + 'colegio/'+value;
+    let loadurl = url + 'colegio/' + value;
 
     let data = {
         'id': value
@@ -43,23 +43,23 @@ function loadstart() {
     $('#colegiotable').empty();
 
     fetch(loadurl, init)
-        .then((resp) => resp.json())
-        .then(function (data) {
-            console.log(data);
-            if (data.msg) {
+            .then((resp) => resp.json())
+            .then(function (data) {
                 console.log(data);
-                return;
-            }
+                if (data.msg) {
+                    console.log(data);
+                    return;
+                }
 
-            // Generar opciones de dropdowns
-            populateDropdowns(data);
+                // Generar opciones de dropdowns
+                populateDropdowns(data);
 
-            // Renderizar la tabla
-            renderTable(data);
+                // Renderizar la tabla
+                renderTable(data);
 
-            // Adjuntar eventos de filtrado
-            attachFilterEvents(data);
-        });
+                // Adjuntar eventos de filtrado
+                attachFilterEvents(data);
+            });
 }
 
 function populateDropdowns(data) {
@@ -70,9 +70,12 @@ function populateDropdowns(data) {
     let siglas = new Set();
 
     data.forEach(item => {
-        if (item.idSemillero) semilleros.add(item.idSemillero.nombre);
-        if (item.idSemillero) siglas.add(item.idSemillero.sigla);
-        if (item.idUniversidad) universidades.add(item.idUniversidad.nombre);
+        if (item.idSemillero)
+            semilleros.add(item.idSemillero.nombre);
+        if (item.idSemillero)
+            siglas.add(item.idSemillero.sigla);
+        if (item.idUniversidad)
+            universidades.add(item.idUniversidad.nombre);
         if (item.idProgramaAcademico) {
             programas.add(item.idProgramaAcademico.nombre);
         } else if (item.otroPrograma) {
@@ -118,28 +121,44 @@ function renderTable(data) {
         }
 
         fill += '<tr>' +
-            '<td>' + item.fecha + '</td>' +
-            '<td>' + item.idPersona.nombre + '</td>' +
-            '<td>' + item.idPersona.sexo + '</td>' +
-            '<td>' + item.idSemillero.nombre + '</td>' +
-            '<td>' + item.idSemillero.sigla + '</td>' +
-            '<td>' + InstitucionUniversidad + '</td>' +
-            '<td>' + Programaacademico + '</td>' +
-            '<td>' + poblacion + '</td>' +
-            '</tr>';
+                '<td>' + item.fecha + '</td>' +
+                '<td>' + item.idPersona.nombre + '</td>' +
+                '<td>' + item.idPersona.sexo + '</td>' +
+                '<td>' + item.idSemillero.nombre + '</td>' +
+                '<td>' + item.idSemillero.sigla + '</td>' +
+                '<td>' + InstitucionUniversidad + '</td>' +
+                '<td>' + Programaacademico + '</td>' +
+                '<td>' + poblacion + '</td>' +
+                '</tr>';
     });
     $('#colegiotable').append(fill);
 }
 
 function attachFilterEvents(data) {
-    $('#filter-fecha').on('input', function() { applyFilters(data); });
-    $('#filter-nombre').on('input', function() { applyFilters(data); });
-    $('#filter-genero').on('change', function() { applyFilters(data); });
-    $('#filter-semillero').on('change', function() { applyFilters(data); });
-    $('#filter-sigla').on('change', function() { applyFilters(data); });
-    $('#filter-universidad').on('change', function() { applyFilters(data); });
-    $('#filter-programa').on('change', function() { applyFilters(data); });
-    $('#filter-poblacion').on('change', function() { applyFilters(data); });
+    $('#filter-fecha').on('input', function () {
+        applyFilters(data);
+    });
+    $('#filter-nombre').on('input', function () {
+        applyFilters(data);
+    });
+    $('#filter-genero').on('change', function () {
+        applyFilters(data);
+    });
+    $('#filter-semillero').on('change', function () {
+        applyFilters(data);
+    });
+    $('#filter-sigla').on('change', function () {
+        applyFilters(data);
+    });
+    $('#filter-universidad').on('change', function () {
+        applyFilters(data);
+    });
+    $('#filter-programa').on('change', function () {
+        applyFilters(data);
+    });
+    $('#filter-poblacion').on('change', function () {
+        applyFilters(data);
+    });
 }
 
 function applyFilters(data) {
@@ -165,13 +184,13 @@ function applyFilters(data) {
         const poblacionStr = item.idPersona.idPoblacionEspecial && item.idPersona.idPoblacionEspecial.nombre ? item.idPersona.idPoblacionEspecial.nombre.toLowerCase() : '';
 
         return (!filters.fecha || fechaStr.includes(filters.fecha)) &&
-               (!filters.nombre || nombreStr.includes(filters.nombre)) &&
-               (!filters.genero || generoStr.includes(filters.genero)) &&
-               (!filters.semillero || semilleroStr.includes(filters.semillero)) &&
-               (!filters.sigla || siglaStr.includes(filters.sigla)) &&
-               (!filters.universidad || universidadStr.includes(filters.universidad)) &&
-               (!filters.programa || programaStr.includes(filters.programa)) &&
-               (!filters.poblacion || poblacionStr.includes(filters.poblacion));
+                (!filters.nombre || nombreStr.includes(filters.nombre)) &&
+                (!filters.genero || generoStr.includes(filters.genero)) &&
+                (!filters.semillero || semilleroStr.includes(filters.semillero)) &&
+                (!filters.sigla || siglaStr.includes(filters.sigla)) &&
+                (!filters.universidad || universidadStr.includes(filters.universidad)) &&
+                (!filters.programa || programaStr.includes(filters.programa)) &&
+                (!filters.poblacion || poblacionStr.includes(filters.poblacion));
     });
 
     $('#colegiotable').empty();
@@ -180,12 +199,12 @@ function applyFilters(data) {
 
 
 
-$(function() {
-        $("#filter-fecha").datepicker({
-            dateFormat: "yy-mm-dd"
-        });
+$(function () {
+    $("#filter-fecha").datepicker({
+        dateFormat: "yy-mm-dd"
+    });
 
-       });
+});
 
 
 

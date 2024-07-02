@@ -16,7 +16,7 @@ function editar(value) {
 }
 
 function eliminar(value) {
-    let loadurl = url + 'persona/'+value;
+    let loadurl = url + 'persona/' + value;
 
     let data = {
         'id': value
@@ -39,7 +39,7 @@ function eliminar(value) {
 
 function loadstart() {
 
-  
+
 
     let loadurl = url + 'persona';
     let init = makeinitnodat();
@@ -60,12 +60,12 @@ function loadstart() {
                 $.each(data, function (i, item) {
                     fill += '<tr>' +
                             '<td>' + item.nombre + '</td>' +
-                             '<td>' + item.apellido + '</td>' +
-                              '<td>' + item.codigo + '</td>' +
-                               '<td>' + item.documento + '</td>' +
-                                '<td>' + item.fechaNacimiento + '</td>' +
-                                 '<td>' + item.sexo + '</td>' +
-                                  '<td>' + item.telefono + '</td>' +
+                            '<td>' + item.apellido + '</td>' +
+                            '<td>' + item.codigo + '</td>' +
+                            '<td>' + item.documento + '</td>' +
+                            '<td>' + item.fechaNacimiento + '</td>' +
+                            '<td>' + item.sexo + '</td>' +
+                            '<td>' + item.telefono + '</td>' +
                             '<td>' +
                             '<button type="button" class="btn btn-info" value="' + item.id + '" onclick="editar(this.value)" title="editar publicacion">' +
                             '<i class="fas fa-pen"></i>' +

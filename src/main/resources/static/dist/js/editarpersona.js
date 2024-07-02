@@ -9,8 +9,8 @@ $(document).ready(function () {
         guardar();
     });
 
-    
-       cargarpoblacion();
+
+    cargarpoblacion();
     cargartipo();
     cargarpersona();
 
@@ -44,15 +44,15 @@ function cargarpersona() {
 
                 console.log(aula);
 
-                                $("#nombre").val(data.nombre);
-                                $("#apellido").val(data.apellido);
-                                $("#telefono").val(data.telefono);
-                                $("#documento").val(data.telefono);
-                                $("#codigo").val(data.codigo);
-                                $("#fechaNacimiento").val(data.fechaNacimiento);
-                                $("#sexo").val(data.sexo);
-                                $("#idPoblacionEspecial").val(data.idPoblacionEspecial);
-                                $("#idTipoUsuario").val(data.idTipoUsuario);
+                $("#nombre").val(data.nombre);
+                $("#apellido").val(data.apellido);
+                $("#telefono").val(data.telefono);
+                $("#documento").val(data.telefono);
+                $("#codigo").val(data.codigo);
+                $("#fechaNacimiento").val(data.fechaNacimiento);
+                $("#sexo").val(data.sexo);
+                $("#idPoblacionEspecial").val(data.idPoblacionEspecial);
+                $("#idTipoUsuario").val(data.idTipoUsuario);
 
 
 
@@ -62,11 +62,11 @@ function cargarpersona() {
 
 function guardar() {
 
-     let idu = getTipoId();
+    let idu = getTipoId();
 
-    let loadurl = url + 'persona/'+idu;
+    let loadurl = url + 'persona/' + idu;
 
-   let nombre = $("#nombre").val();
+    let nombre = $("#nombre").val();
     let apellido = $("#apellido").val();
     let documento = $("#documento").val();
     let telefono = $("#telefono").val();
@@ -76,7 +76,7 @@ function guardar() {
     let idPoblacionEspecial = $("#idPoblacionEspecial").val();
     let idTipoUsuario = $("#idTipoUsuario").val();
 
-  
+
     let data = {
         nombre: nombre,
         apellido: apellido,
@@ -89,7 +89,7 @@ function guardar() {
         idTipoUsuario: idTipoUsuario
     };
 
-    
+
 
     console.log(data);
     let init = makeinit(data)
@@ -112,74 +112,74 @@ function guardar() {
 
 }
 
-$(function() {
+$(function () {
     $("#fechaNacimiento, #fecha, #fechaVisita").datepicker({
         dateFormat: "yy-mm-dd"
     });
 
-  
+
 });
 
-function cargarpoblacion(){
+function cargarpoblacion() {
 
     $('#idPoblacionEspecial').empty();
 
-       let loadurl = url + 'poblacion';
+    let loadurl = url + 'poblacion';
 
-                let init = makeinitnodat();
+    let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                //curso = data;
 
-                           console.log(data);
+                console.log(data);
 
-                            let fill = ''
+                let fill = ''
 
-                            $.each(data, function (i, item) {
-                                 fill += '<option value="'+ item.id +'">'+ item.nombre+'</option>';
+                $.each(data, function (i, item) {
+                    fill += '<option value="' + item.id + '">' + item.nombre + '</option>';
 
-                            });
+                });
 
-                             $('#idPoblacionEspecial').append(fill);
-
-
+                $('#idPoblacionEspecial').append(fill);
 
 
 
-                        });         
- }
 
- function cargartipo(){
+
+            });
+}
+
+function cargartipo() {
 
     $('#idTipoUsuario').empty();
 
-       let loadurl = url + 'tipo';
+    let loadurl = url + 'tipo';
 
-                let init = makeinitnodat();
+    let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                //curso = data;
 
-                           console.log(data);
+                console.log(data);
 
-                            let fill = ''
+                let fill = ''
 
-                            $.each(data, function (i, item) {
-                                 fill += '<option value="'+ item.id +'">'+ item.tipo+'</option>';
+                $.each(data, function (i, item) {
+                    fill += '<option value="' + item.id + '">' + item.tipo + '</option>';
 
-                            });
+                });
 
-                            $('#idTipoUsuario').append(fill);
+                $('#idTipoUsuario').append(fill);
 
 
-                            $("#idTipoUsuario").val(4);
+                $("#idTipoUsuario").val(4);
 
-                        });       
- }
+            });
+}
 
 
 function makeinit(data) {

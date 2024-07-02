@@ -8,7 +8,7 @@ $(document).ready(function () {
 
         registrar();
     });
-   cargarpoblacion();
+    cargarpoblacion();
     cargartipo();
 });
 
@@ -25,7 +25,7 @@ function registrar() {
     let idPoblacionEspecial = $("#idPoblacionEspecial").val();
     let idTipoUsuario = $("#idTipoUsuario").val();
 
-  
+
     let data = {
         nombre: nombre,
         apellido: apellido,
@@ -51,42 +51,42 @@ function registrar() {
                 console.log(data);
 
                 console.log(data);
-               alert("se ha registrado la persona");
+                alert("se ha registrado la persona");
                 location.href = "./persona.html";
 
             });
 
 
 }
-$(function() {
+$(function () {
     $("#fechaNacimiento, #fecha, #fechaVisita").datepicker({
         dateFormat: "yy-mm-dd"
     });
 
-    $("#documento").on("blur", function() {
+    $("#documento").on("blur", function () {
         var documento = $(this).val();
         if (documento) {
             let loadurl = url + 'persona/doc/' + documento;
             let init = makeinitnodat();
 
             fetch(loadurl, init)
-                .then((resp) => resp.json())
-                .then(function(data) {
-                    console.log(data);
+                    .then((resp) => resp.json())
+                    .then(function (data) {
+                        console.log(data);
 
-                    if (data && !data.msg) {
-                        $('#documentoHelp').text('El documento ya existe').removeClass('text-muted text-success').addClass('text-danger');
-                        $('#guardarBtn').prop('disabled', true); // Deshabilitar el botón
-                    } else {
-                        $('#documentoHelp').text('El documento está disponible').removeClass('text-muted text-danger').addClass('text-success');
-                        $('#guardarBtn').prop('disabled', false); // Habilitar el botón
-                    }
-                })
-                .catch(function(error) {
-                    console.error('Error:', error);
-                    $('#documentoHelp').text('Error al verificar el documento').removeClass('text-muted text-success').addClass('text-danger');
-                    $('#guardarBtn').prop('disabled', true); // Deshabilitar el botón en caso de error
-                });
+                        if (data && !data.msg) {
+                            $('#documentoHelp').text('El documento ya existe').removeClass('text-muted text-success').addClass('text-danger');
+                            $('#guardarBtn').prop('disabled', true); // Deshabilitar el botón
+                        } else {
+                            $('#documentoHelp').text('El documento está disponible').removeClass('text-muted text-danger').addClass('text-success');
+                            $('#guardarBtn').prop('disabled', false); // Habilitar el botón
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error('Error:', error);
+                        $('#documentoHelp').text('Error al verificar el documento').removeClass('text-muted text-success').addClass('text-danger');
+                        $('#guardarBtn').prop('disabled', true); // Deshabilitar el botón en caso de error
+                    });
         } else {
             $('#documentoHelp').text('Verificando...').removeClass('text-danger text-success').addClass('text-muted');
             $('#guardarBtn').prop('disabled', true); // Deshabilitar el botón si el campo está vacío
@@ -95,66 +95,66 @@ $(function() {
 });
 
 
-function cargarpoblacion(){
+function cargarpoblacion() {
 
     $('#idPoblacionEspecial').empty();
 
-       let loadurl = url + 'poblacion';
+    let loadurl = url + 'poblacion';
 
-                let init = makeinitnodat();
+    let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                //curso = data;
 
-                           console.log(data);
+                console.log(data);
 
-                            let fill = ''
+                let fill = ''
 
-                            $.each(data, function (i, item) {
-                                 fill += '<option value="'+ item.id +'">'+ item.nombre+'</option>';
+                $.each(data, function (i, item) {
+                    fill += '<option value="' + item.id + '">' + item.nombre + '</option>';
 
-                            });
+                });
 
-                             $('#idPoblacionEspecial').append(fill);
-
-
+                $('#idPoblacionEspecial').append(fill);
 
 
 
-                        });         
- }
 
- function cargartipo(){
+
+            });
+}
+
+function cargartipo() {
 
     $('#idTipoUsuario').empty();
 
-       let loadurl = url + 'tipo';
+    let loadurl = url + 'tipo';
 
-                let init = makeinitnodat();
+    let init = makeinitnodat();
 
-                fetch(loadurl, init)
-                        .then((resp) => resp.json())
-                        .then(function (data) {
-                            //curso = data;
+    fetch(loadurl, init)
+            .then((resp) => resp.json())
+            .then(function (data) {
+                //curso = data;
 
-                           console.log(data);
+                console.log(data);
 
-                            let fill = ''
+                let fill = ''
 
-                            $.each(data, function (i, item) {
-                                 fill += '<option value="'+ item.id +'">'+ item.tipo+'</option>';
+                $.each(data, function (i, item) {
+                    fill += '<option value="' + item.id + '">' + item.tipo + '</option>';
 
-                            });
+                });
 
-                            $('#idTipoUsuario').append(fill);
+                $('#idTipoUsuario').append(fill);
 
 
-                            $("#idTipoUsuario").val(4);
+                $("#idTipoUsuario").val(4);
 
-                        });       
- }
+            });
+}
 
 
 function makeinit(data) {
