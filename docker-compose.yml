@@ -6,13 +6,15 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "9090:8080"
     depends_on:
       - mariadb
     environment:
       - MYSQL_URL=jdbc:mariadb://mariadb:3306/fablab_asistencia
       - MYSQL_USERNAME=user
       - MYSQL_PASSWORD=password
+      - SPRING_PORT=9090
+    command: ["java", "-jar", "/asistencia.jar", "--server.port=${SPRING_PORT}"]
   mariadb:
     image: mariadb:10.5
     environment:
@@ -21,6 +23,6 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - ./fablab_asistencia.sql:/docker-entrypoint-initdb.d/fablab_asistencia.sql

@@ -10,9 +10,9 @@
     </parent>
     <groupId>com.fablab.ufps.edu.co</groupId>
     <artifactId>asistencia</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0</version>
     <name>asistencia</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Control de asistencia fablab</description>
     <properties>
         <java.version>21</java.version>
     </properties>
