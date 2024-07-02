@@ -102,5 +102,5 @@ public class AdmUser implements Serializable {
     public String toString() {
         return "com.fablab.ufps.edu.co.asistencia.entity.AdmUser[ id=" + id + " ]";
     }
-    
+
 }

@@ -17,6 +17,7 @@ import com.fablab.ufps.edu.co.asistencia.entity.Universidad;
 import com.fablab.ufps.edu.co.asistencia.entity.VisitaClase;
 import com.fablab.ufps.edu.co.asistencia.repository.PersonaRepository;
 import com.fablab.ufps.edu.co.asistencia.repository.VisitaClaseRepository;
+import com.fablab.ufps.edu.co.asistencia.services.PersonaService;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 
 /**
+ * Controlador para la gestión de la asistencia a clases. Proporciona endpoints
+ * para listar, reportar, crear y eliminar visitas de clase.
  *
  * @author jerson
  */
@@ -43,8 +46,13 @@ public class AsistenciaClaseController {
     private VisitaClaseRepository visitaClaseRepository;
 
     @Autowired
-    private PersonaRepository personaRepository;
+    private PersonaService personaService;
 
+    /**
+     * Listar todas las visitas de clase.
+     *
+     * @return una lista de objetos representando las visitas de clase.
+     */
     @GetMapping()
     public List<Object> list() {
         return visitaClaseRepository
@@ -54,6 +62,12 @@ public class AsistenciaClaseController {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Generar un reporte de todas las visitas de clase.
+     *
+     * @return una lista de objetos representando el reporte de visitas de
+     * clase.
+     */
     @GetMapping("/reporte")
     public List<Object> Reporte() {
         return visitaClaseRepository
@@ -63,6 +77,12 @@ public class AsistenciaClaseController {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Crear una nueva visita de clase.
+     *
+     * @param input los datos de la visita de clase a crear.
+     * @return una respuesta HTTP con el objeto creado o un mensaje de error.
+     */
     @PostMapping
     public ResponseEntity post(@RequestBody AsistenciaClaseJson input) {
 
@@ -89,7 +109,7 @@ public class AsistenciaClaseController {
 
             vst.setIdAula(new Aula(input.getIdAula()));
             vst.setIdUniversidad(new Universidad(input.getIdUniversidad()));
-            vst.setIdPersona(CreatePersona(input));
+            vst.setIdPersona(personaService.createPersona(input));
 
             // Guardar en la base de datos
             vst = visitaClaseRepository.save(vst);
@@ -108,34 +128,15 @@ public class AsistenciaClaseController {
 
     }
 
+    /**
+     * Eliminar una visita de clase por su ID.
+     *
+     * @param id el ID de la visita de clase a eliminar.
+     * @return una respuesta HTTP indicando el resultado de la operación.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
         return null;
-    }
-
-    private Persona CreatePersona(AsistenciaClaseJson input) {
-
-        try {
-
-            Persona ud = new Persona();
-
-            ud.setNombre(input.getNombre());
-            ud.setApellido(input.getApellido());
-            ud.setDocumento(input.getDocumento());
-            ud.setTelefono(input.getTelefono());
-            ud.setCodigo(input.getCodigo());
-            ud.setFechaNacimiento(input.getFechaNacimiento());
-            ud.setSexo(input.getSexo());
-
-            ud.setIdPoblacionEspecial(new PoblacionEspecial(input.getIdPoblacionEspecial()));
-
-            ud.setIdTipoUsuario(new TipoUsuario(input.getIdTipoUsuario()));
-
-            return personaRepository.save(ud);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al crear el estudiante", e);
-        }
     }
 
 }

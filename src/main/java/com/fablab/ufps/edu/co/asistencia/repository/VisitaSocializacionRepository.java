@@ -4,13 +4,10 @@
  */
 package com.fablab.ufps.edu.co.asistencia.repository;
 
-import com.fablab.ufps.edu.co.asistencia.entity.Cursos;
 import com.fablab.ufps.edu.co.asistencia.entity.Persona;
 import com.fablab.ufps.edu.co.asistencia.entity.ProgramaAcademico;
 import com.fablab.ufps.edu.co.asistencia.entity.Universidad;
-import com.fablab.ufps.edu.co.asistencia.entity.VisitaCurso;
 import com.fablab.ufps.edu.co.asistencia.entity.VisitaSocializacion;
-import com.fablab.ufps.edu.co.asistencia.entity.VisitaSteamSchool;
 import java.util.ArrayList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

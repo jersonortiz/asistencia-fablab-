@@ -4,7 +4,6 @@
  */
 package com.fablab.ufps.edu.co.asistencia.repository;
 
-import com.fablab.ufps.edu.co.asistencia.entity.VisitaSteamYoung;
 import com.fablab.ufps.edu.co.asistencia.entity.VisitaSustentacionProyectoGrado;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

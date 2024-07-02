@@ -7,13 +7,15 @@ package com.fablab.ufps.edu.co.asistencia.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalTime;
 import java.util.Date;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
  * @author jerson
  */
-@Data
+@Getter
+@Setter
 public class IngresoSalidaDTO {
 
     private Integer id;

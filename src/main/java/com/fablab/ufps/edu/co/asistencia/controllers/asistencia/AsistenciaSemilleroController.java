@@ -17,6 +17,7 @@ import com.fablab.ufps.edu.co.asistencia.entity.Universidad;
 import com.fablab.ufps.edu.co.asistencia.entity.VisitaSemillero;
 import com.fablab.ufps.edu.co.asistencia.repository.PersonaRepository;
 import com.fablab.ufps.edu.co.asistencia.repository.VisitaSemilleroRepository;
+import com.fablab.ufps.edu.co.asistencia.services.PersonaService;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
@@ -44,7 +45,7 @@ public class AsistenciaSemilleroController {
     private VisitaSemilleroRepository visitaSemilleroRepository;
 
     @Autowired
-    private PersonaRepository personaRepository;
+    private PersonaService personaService;
 
     @GetMapping()
     public List<Object> list() {
@@ -92,7 +93,7 @@ public class AsistenciaSemilleroController {
             vst.setFecha(input.getFecha());
 
             vst.setIdSemillero(new Semillero(input.getIdSemillero()));
-            vst.setIdPersona(CreatePersona(input));
+            vst.setIdPersona(personaService.createPersona(input));
             vst.setIdUniversidad(new Universidad(input.getIdUniversidad()));
 
             // Guardar en la base de datos
@@ -113,31 +114,6 @@ public class AsistenciaSemilleroController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
         return null;
-    }
-
-    private Persona CreatePersona(AsistenciaSemilleroJson input) {
-
-        try {
-
-            Persona ud = new Persona();
-
-            ud.setNombre(input.getNombre());
-            ud.setApellido(input.getApellido());
-            ud.setDocumento(input.getDocumento());
-            ud.setTelefono(input.getTelefono());
-            ud.setCodigo(input.getCodigo());
-            ud.setFechaNacimiento(input.getFechaNacimiento());
-            ud.setSexo(input.getSexo());
-
-            ud.setIdPoblacionEspecial(new PoblacionEspecial(input.getIdPoblacionEspecial()));
-
-            ud.setIdTipoUsuario(new TipoUsuario(input.getIdTipoUsuario()));
-
-            return personaRepository.save(ud);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al crear el estudiante", e);
-        }
     }
 
 }

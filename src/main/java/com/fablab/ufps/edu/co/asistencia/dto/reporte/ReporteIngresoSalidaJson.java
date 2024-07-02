@@ -4,17 +4,18 @@
  */
 package com.fablab.ufps.edu.co.asistencia.dto.reporte;
 
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.PracticantepasanteBecaDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalTime;
 import java.util.Date;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
  * @author jerson
  */
-@Data
+@Getter
+@Setter
 public class ReporteIngresoSalidaJson {
     private Integer id;
 

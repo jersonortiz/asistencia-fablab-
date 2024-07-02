@@ -4,13 +4,15 @@
  */
 package com.fablab.ufps.edu.co.asistencia.dto.json;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
  * @author jerson
  */
-@Data
+@Getter
+@Setter
 public class MensajeJson {
     private String msg;
 }

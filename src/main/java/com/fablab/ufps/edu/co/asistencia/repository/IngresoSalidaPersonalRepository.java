@@ -5,7 +5,6 @@
 package com.fablab.ufps.edu.co.asistencia.repository;
 
 import com.fablab.ufps.edu.co.asistencia.entity.IngresoSalidaPersonal;
-import com.fablab.ufps.edu.co.asistencia.entity.Persona;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

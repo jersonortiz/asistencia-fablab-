@@ -5,18 +5,15 @@
 package com.fablab.ufps.edu.co.asistencia.controllers.asistencia;
 
 import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
+import com.fablab.ufps.edu.co.asistencia.common.CommonReporte;
 import com.fablab.ufps.edu.co.asistencia.dto.json.AsistenciaCursoJson;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
-import com.fablab.ufps.edu.co.asistencia.dto.visita.VisitaCursoDTO;
 import com.fablab.ufps.edu.co.asistencia.entity.Cursos;
-import com.fablab.ufps.edu.co.asistencia.entity.Persona;
-import com.fablab.ufps.edu.co.asistencia.entity.PoblacionEspecial;
 import com.fablab.ufps.edu.co.asistencia.entity.ProgramaAcademico;
-import com.fablab.ufps.edu.co.asistencia.entity.TipoUsuario;
 import com.fablab.ufps.edu.co.asistencia.entity.Universidad;
 import com.fablab.ufps.edu.co.asistencia.entity.VisitaCurso;
-import com.fablab.ufps.edu.co.asistencia.repository.PersonaRepository;
 import com.fablab.ufps.edu.co.asistencia.repository.VisitaCursoRepository;
+import com.fablab.ufps.edu.co.asistencia.services.PersonaService;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
@@ -30,9 +27,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.server.ResponseStatusException;
 
 /**
+ * Controlador para la gestión de la asistencia a cursos. Proporciona endpoints
+ * para listar, crear, obtener, actualizar y eliminar visitas de curso.
  *
  * @author jerson
  */
@@ -44,8 +42,14 @@ public class AsistenciaCursoController {
     private VisitaCursoRepository visitaCursoRepository;
 
     @Autowired
-    private PersonaRepository personaRepository;
+    private PersonaService personaService;
 
+    /**
+     * Maneja las solicitudes HTTP GET para listar todos los registros de
+     * visitas a cursos.
+     *
+     * @return una lista de objetos convertidos a DTO.
+     */
     @GetMapping()
     public List<Object> list() {
         return visitaCursoRepository
@@ -55,16 +59,55 @@ public class AsistenciaCursoController {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Maneja las solicitudes HTTP GET al endpoint "/reporte". Recupera todos
+     * los registros del `visitaCursoRepository`, los convierte usando
+     * `CommonReporte.visitaCursoToReporteGeneralCurso`, y devuelve los
+     * registros convertidos como una lista.
+     *
+     * @return una lista de objetos convertidos a reporte general.
+     */
+    @GetMapping("/reporte")
+    public List<Object> reporte() {
+        return visitaCursoRepository
+                .findAll()
+                .stream()
+                .map(CommonReporte::visitaCursoToReporteGeneralCurso)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Maneja las solicitudes HTTP GET para obtener un registro específico por
+     * ID.
+     *
+     * @param id el ID del registro a obtener.
+     * @return el objeto correspondiente al ID especificado.
+     */
     @GetMapping("/{id}")
     public Object get(@PathVariable String id) {
         return null;
     }
 
+    /**
+     * Maneja las solicitudes HTTP PUT para actualizar un registro específico
+     * por ID.
+     *
+     * @param id el ID del registro a actualizar.
+     * @param input el objeto con los nuevos datos.
+     * @return una respuesta indicando el resultado de la operación.
+     */
     @PutMapping("/{id}")
     public ResponseEntity<?> put(@PathVariable String id, @RequestBody Object input) {
         return null;
     }
 
+    /**
+     * Maneja las solicitudes HTTP POST para crear un nuevo registro de
+     * asistencia a curso.
+     *
+     * @param input el objeto con los datos del nuevo registro.
+     * @return una respuesta con el registro creado o un mensaje de error.
+     */
     @PostMapping
     public ResponseEntity post(@RequestBody AsistenciaCursoJson input) {
         try {
@@ -84,7 +127,7 @@ public class AsistenciaCursoController {
             vst.setFechaVisita(input.getFechaVisita());
             vst.setSesion(input.getSesion());
             vst.setIdCurso(new Cursos(input.getIdCurso()));
-            vst.setIdPersona(CreatePersona(input));
+            vst.setIdPersona(personaService.createPersona(input));
             vst.setIdUniversidad(new Universidad(input.getIdUniversidad()));
 
             // Guardar en la base de datos
@@ -103,34 +146,16 @@ public class AsistenciaCursoController {
 
     }
 
+    /**
+     * Maneja las solicitudes HTTP DELETE para eliminar un registro específico
+     * por ID.
+     *
+     * @param id el ID del registro a eliminar.
+     * @return una respuesta indicando el resultado de la operación.
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
         return null;
-    }
-
-    private Persona CreatePersona(AsistenciaCursoJson input) {
-
-        try {
-
-            Persona ud = new Persona();
-
-            ud.setNombre(input.getNombre());
-            ud.setApellido(input.getApellido());
-            ud.setDocumento(input.getDocumento());
-            ud.setTelefono(input.getTelefono());
-            ud.setCodigo(input.getCodigo());
-            ud.setFechaNacimiento(input.getFechaNacimiento());
-            ud.setSexo(input.getSexo());
-
-            ud.setIdPoblacionEspecial(new PoblacionEspecial(input.getIdPoblacionEspecial()));
-
-            ud.setIdTipoUsuario(new TipoUsuario(input.getIdTipoUsuario()));
-
-            return personaRepository.save(ud);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al crear el estudiante", e);
-        }
     }
 
 }

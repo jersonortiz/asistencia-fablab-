@@ -5,7 +5,6 @@
 package com.fablab.ufps.edu.co.asistencia.dto.reporte;
 
 import com.fablab.ufps.edu.co.asistencia.dto.CRUD.ColegioDTO;
-import com.fablab.ufps.edu.co.asistencia.dto.CRUD.PersonaDTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 import lombok.Getter;

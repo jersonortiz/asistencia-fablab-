@@ -5,6 +5,7 @@
 package com.fablab.ufps.edu.co.asistencia.controllers.asistencia;
 
 import com.fablab.ufps.edu.co.asistencia.common.CommonDTO;
+import com.fablab.ufps.edu.co.asistencia.common.CommonReporte;
 import com.fablab.ufps.edu.co.asistencia.dto.json.AsistenciaSteamJson;
 import com.fablab.ufps.edu.co.asistencia.dto.json.MensajeJson;
 import com.fablab.ufps.edu.co.asistencia.dto.visita.VisitaSteamYoungDTO;
@@ -58,6 +59,15 @@ public class AsistenciaSteamYoungController {
                 .map(CommonDTO::visitaSteamYoungToDTO)
                 .collect(Collectors.toList());
 
+    }
+
+    @GetMapping("/reporte")
+    public List<Object> reporte() {
+        return visitaSteamYoungRepository
+                .findAll()
+                .stream()
+                .map(CommonReporte::visitaSteamYoungToReporteGeneralCurso)
+                .collect(Collectors.toList());
     }
 
     @PostMapping

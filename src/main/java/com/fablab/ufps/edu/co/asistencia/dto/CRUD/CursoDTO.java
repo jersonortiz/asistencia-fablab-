@@ -4,8 +4,6 @@
  */
 package com.fablab.ufps.edu.co.asistencia.dto.CRUD;
 
-import com.fablab.ufps.edu.co.asistencia.entity.Cursos;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +11,8 @@ import lombok.Setter;
  *
  * @author jerson
  */
-@Data
+@Getter
+@Setter
 public class CursoDTO {
 
     private Integer id;

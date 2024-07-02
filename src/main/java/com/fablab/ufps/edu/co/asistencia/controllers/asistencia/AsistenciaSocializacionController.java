@@ -16,6 +16,7 @@ import com.fablab.ufps.edu.co.asistencia.entity.Universidad;
 import com.fablab.ufps.edu.co.asistencia.entity.VisitaSocializacion;
 import com.fablab.ufps.edu.co.asistencia.repository.PersonaRepository;
 import com.fablab.ufps.edu.co.asistencia.repository.VisitaSocializacionRepository;
+import com.fablab.ufps.edu.co.asistencia.services.PersonaService;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class AsistenciaSocializacionController {
     private VisitaSocializacionRepository visitaSocializacionRepository;
 
     @Autowired
-    private PersonaRepository personaRepository;
+    private PersonaService personaService;
 
     @GetMapping()
     public List<Object> list() {
@@ -90,7 +91,7 @@ public class AsistenciaSocializacionController {
             }
 
             vst.setFecha(input.getFecha());
-            vst.setIdPersona(CreatePersona(input));
+            vst.setIdPersona(personaService.createPersona(input));
             vst.setIdUniversidad(new Universidad(input.getIdUniversidad()));
 
             // Guardar en la base de datos
@@ -114,28 +115,4 @@ public class AsistenciaSocializacionController {
         return null;
     }
 
-    private Persona CreatePersona(AsistenciaSocializacionJson input) {
-
-        try {
-
-            Persona ud = new Persona();
-
-            ud.setNombre(input.getNombre());
-            ud.setApellido(input.getApellido());
-            ud.setDocumento(input.getDocumento());
-            ud.setTelefono(input.getTelefono());
-            ud.setCodigo(input.getCodigo());
-            ud.setFechaNacimiento(input.getFechaNacimiento());
-            ud.setSexo(input.getSexo());
-
-            ud.setIdPoblacionEspecial(new PoblacionEspecial(input.getIdPoblacionEspecial()));
-
-            ud.setIdTipoUsuario(new TipoUsuario(input.getIdTipoUsuario()));
-
-            return personaRepository.save(ud);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error al crear el estudiante", e);
-        }
-    }
 }
